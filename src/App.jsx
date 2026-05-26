@@ -475,8 +475,8 @@ export default function App() {
                   Projects <i className="fas fa-arrow-right"></i>
                 </a>
                 <a 
-                  href="resume/Iqbal_Apriand_Resume.pdf"
-                  download="Iqbal_Apriand_Resume.pdf"
+                  href="resume/Resume_Iqbal.pdf"
+                  download="Resume_Iqbal.pdf"
                   className="btn-secondary"
                 >
                   Resume <i className="fas fa-download"></i>
