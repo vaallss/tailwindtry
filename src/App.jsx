@@ -37,6 +37,7 @@ export default function App() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState('next');
+  const [isZoomed, setIsZoomed] = useState(false);
 
   // Words for typing animation in hero
   const words = ["UI/UX Designer", "Graphic Designer", "Web Developer"];
@@ -112,6 +113,11 @@ export default function App() {
       document.body.style.overflow = '';
     };
   }, [selectedProject]);
+
+  // Reset zoom when project or slide changes
+  useEffect(() => {
+    setIsZoomed(false);
+  }, [selectedProject, currentImageIndex]);
 
   // Projects list
   const projects = [
@@ -893,84 +899,125 @@ export default function App() {
 
           {/* Modal Content Wrapper */}
           <div 
-            className="relative w-full max-w-5xl h-[85vh] flex flex-col items-center justify-between p-4 md:p-8"
+            className="relative w-full max-w-5xl h-[90vh] md:h-[85vh] flex flex-col items-center justify-between p-2 md:p-8"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header: Title and Counter */}
-            <div className="flex flex-col items-center gap-2 mb-2 select-none">
+            <div className="flex flex-col items-center gap-1.5 mb-2 select-none text-center">
               <span className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-white/90 tracking-widest uppercase">
                 {selectedProject.title}
               </span>
               <span className="text-sm font-medium text-zinc-400">
                 {currentImageIndex === 0 ? "Cover / Judul" : `Desain ${currentImageIndex}`} — {currentImageIndex + 1} dari {selectedProject.images.length}
               </span>
+              <span className="text-[10px] md:text-xs text-zinc-500 flex items-center gap-1.5">
+                <i className="fas fa-search-plus"></i> {isZoomed ? "Klik/sentuh gambar untuk memperkecil" : "Klik/sentuh gambar untuk memperbesar detail"}
+              </span>
             </div>
 
             {/* Main Area: Image and Navigation Buttons */}
-            <div className="relative flex-1 w-full flex items-center justify-center group">
-              {/* Prev Button */}
-              {selectedProject.images.length > 1 && (
+            <div className="relative flex-1 w-full flex items-center justify-center group px-1">
+              {/* Prev Button (Desktop only) */}
+              {selectedProject.images.length > 1 && !isZoomed && (
                 <button 
                   onClick={() => {
                     setSlideDirection('prev');
                     setCurrentImageIndex((prev) => (prev === 0 ? selectedProject.images.length - 1 : prev - 1));
                   }}
-                  className="absolute left-4 z-20 w-12 h-12 rounded-xl bg-black/40 hover:bg-zinc-900 border border-white/5 hover:border-white/20 flex items-center justify-center text-white/70 hover:text-white backdrop-blur-md transition-all transform hover:scale-105 active:scale-95"
+                  className="hidden md:flex absolute left-4 z-20 w-12 h-12 rounded-xl bg-black/40 hover:bg-zinc-900 border border-white/5 hover:border-white/20 items-center justify-center text-white/70 hover:text-white backdrop-blur-md transition-all transform hover:scale-105 active:scale-95"
                 >
                   <i className="fas fa-chevron-left text-lg"></i>
                 </button>
               )}
 
-              {/* Image Container with dynamic slide direction animation */}
+              {/* Image Container with dynamic slide direction and zoom support */}
               <div 
-                className="w-full h-full max-h-[65vh] flex items-center justify-center overflow-hidden rounded-2xl bg-zinc-950/20 border border-white/10 shadow-2xl relative"
+                className={`w-full h-full max-h-[70vh] md:max-h-[65vh] rounded-2xl bg-zinc-950/20 border border-white/10 shadow-2xl relative ${
+                  isZoomed ? 'overflow-auto block' : 'flex items-center justify-center overflow-hidden'
+                }`}
                 style={{ backdropFilter: 'blur(10px)' }}
               >
                 {/* Background soft glow inside image wrapper */}
-                <div 
-                  className="absolute inset-0 pointer-events-none" 
-                  style={{ backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0) 70%)' }}
-                ></div>
+                {!isZoomed && (
+                  <div 
+                    className="absolute inset-0 pointer-events-none" 
+                    style={{ backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0) 70%)' }}
+                  ></div>
+                )}
 
                 <img 
                   key={`${currentImageIndex}-${slideDirection}`}
                   src={selectedProject.images[currentImageIndex]} 
                   alt={`${selectedProject.title} - ${currentImageIndex === 0 ? "Cover" : `Slide ${currentImageIndex}`}`}
-                  className={`max-w-full max-h-full object-contain select-none z-10 gallery-slide-${slideDirection}`}
+                  onClick={() => setIsZoomed(!isZoomed)}
+                  className={`transition-all duration-300 select-none z-10 gallery-slide-${slideDirection} ${
+                    isZoomed 
+                      ? 'w-[250%] md:w-[150%] max-w-none max-h-none h-auto block cursor-zoom-out p-4 md:p-8 mx-auto' 
+                      : 'max-w-full max-h-full object-contain cursor-zoom-in'
+                  }`}
                 />
               </div>
 
-              {/* Next Button */}
-              {selectedProject.images.length > 1 && (
+              {/* Next Button (Desktop only) */}
+              {selectedProject.images.length > 1 && !isZoomed && (
                 <button 
                   onClick={() => {
                     setSlideDirection('next');
                     setCurrentImageIndex((prev) => (prev === selectedProject.images.length - 1 ? 0 : prev + 1));
                   }}
-                  className="absolute right-4 z-20 w-12 h-12 rounded-xl bg-black/40 hover:bg-zinc-900 border border-white/5 hover:border-white/20 flex items-center justify-center text-white/70 hover:text-white backdrop-blur-md transition-all transform hover:scale-105 active:scale-95"
+                  className="hidden md:flex absolute right-4 z-20 w-12 h-12 rounded-xl bg-black/40 hover:bg-zinc-900 border border-white/5 hover:border-white/20 items-center justify-center text-white/70 hover:text-white backdrop-blur-md transition-all transform hover:scale-105 active:scale-95"
                 >
                   <i className="fas fa-chevron-right text-lg"></i>
                 </button>
               )}
             </div>
 
-            {/* Footer Area: Pagination Indicator dots */}
+            {/* Footer Area: Pagination Indicator & Mobile Navigation */}
             {selectedProject.images.length > 1 && (
-              <div className="flex gap-2.5 mt-6 flex-wrap justify-center max-w-full overflow-x-auto py-2.5 px-5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-                {selectedProject.images.map((_, idx) => (
+              <div className="flex items-center gap-4 mt-4 w-full justify-center select-none">
+                {/* Mobile Prev Button */}
+                {!isZoomed && (
                   <button 
-                    key={idx}
                     onClick={() => {
-                      if (idx === currentImageIndex) return;
-                      setSlideDirection(idx > currentImageIndex ? 'next' : 'prev');
-                      setCurrentImageIndex(idx);
+                      setSlideDirection('prev');
+                      setCurrentImageIndex((prev) => (prev === 0 ? selectedProject.images.length - 1 : prev - 1));
                     }}
-                    className={`h-2.5 rounded-full transition-all duration-300 ${
-                      idx === currentImageIndex ? 'w-8 bg-white shadow-[0_0_8px_rgba(255,255,255,0.5)]' : 'w-2.5 bg-white/30 hover:bg-white/50'
-                    }`}
-                    title={idx === 0 ? "Cover" : `Slide ${idx}`}
-                  />
-                ))}
+                    className="flex md:hidden w-10 h-10 rounded-xl bg-white/5 border border-white/10 items-center justify-center text-white/70 active:bg-white/10"
+                  >
+                    <i className="fas fa-chevron-left"></i>
+                  </button>
+                )}
+
+                {/* Pagination Dots */}
+                <div className="flex gap-2 py-2 px-4 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                  {selectedProject.images.map((_, idx) => (
+                    <button 
+                      key={idx}
+                      onClick={() => {
+                        if (idx === currentImageIndex) return;
+                        setSlideDirection(idx > currentImageIndex ? 'next' : 'prev');
+                        setCurrentImageIndex(idx);
+                      }}
+                      className={`h-2 rounded-full transition-all duration-300 ${
+                        idx === currentImageIndex ? 'w-6 bg-white shadow-[0_0_8px_rgba(255,255,255,0.5)]' : 'w-2 bg-white/30 hover:bg-white/50'
+                      }`}
+                      title={idx === 0 ? "Cover" : `Slide ${idx}`}
+                    />
+                  ))}
+                </div>
+
+                {/* Mobile Next Button */}
+                {!isZoomed && (
+                  <button 
+                    onClick={() => {
+                      setSlideDirection('next');
+                      setCurrentImageIndex((prev) => (prev === selectedProject.images.length - 1 ? 0 : prev + 1));
+                    }}
+                    className="flex md:hidden w-10 h-10 rounded-xl bg-white/5 border border-white/10 items-center justify-center text-white/70 active:bg-white/10"
+                  >
+                    <i className="fas fa-chevron-right"></i>
+                  </button>
+                )}
               </div>
             )}
           </div>
