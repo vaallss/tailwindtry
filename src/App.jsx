@@ -33,6 +33,11 @@ export default function App() {
   // Mouse position state for spotlight glow
   const [mousePos, setMousePos] = useState({ x: -1000, y: -1000 });
 
+  // Modal Gallery state for Design projects
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [slideDirection, setSlideDirection] = useState('next');
+
   // Words for typing animation in hero
   const words = ["UI/UX Designer", "Graphic Designer", "Web Developer"];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -77,6 +82,37 @@ export default function App() {
     return () => clearTimeout(timer);
   }, [currentText, isDeleting, currentWordIndex]);
 
+  // Handle keyboard navigation for modal
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!selectedProject) return;
+      if (e.key === 'Escape') {
+        setSelectedProject(null);
+      } else if (e.key === 'ArrowRight' && selectedProject.images && selectedProject.images.length > 1) {
+        setSlideDirection('next');
+        setCurrentImageIndex((prev) => (prev === selectedProject.images.length - 1 ? 0 : prev + 1));
+      } else if (e.key === 'ArrowLeft' && selectedProject.images && selectedProject.images.length > 1) {
+        setSlideDirection('prev');
+        setCurrentImageIndex((prev) => (prev === 0 ? selectedProject.images.length - 1 : prev - 1));
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedProject]);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedProject]);
+
   // Projects list
   const projects = [
     {
@@ -86,7 +122,15 @@ export default function App() {
       badge: "DESIGN",
       image: "Thumbnail/Feeds.png",
       description: "Social media feed designs with consistent visuals that enhance brand identity and user engagement.",
-      link: "https://drive.google.com/file/d/1wLVgF1hyQv6PyaUJKsO_SLVFwequcZf8/view?usp=sharing"
+      link: "https://drive.google.com/file/d/1wLVgF1hyQv6PyaUJKsO_SLVFwequcZf8/view?usp=sharing",
+      images: [
+        "/Portofolio/Cover/Feeds.png",
+        "/Portofolio/Feeds/Feeds 1.png",
+        "/Portofolio/Feeds/Feeds 2.png",
+        "/Portofolio/Feeds/Feeds 3.png",
+        "/Portofolio/Feeds/Feeds 4.png",
+        "/Portofolio/Feeds/Feeds 5.png"
+      ]
     },
     {
       id: 2,
@@ -95,7 +139,16 @@ export default function App() {
       badge: "DESIGN",
       image: "Thumbnail/Poster.png",
       description: "Creative poster designs with a modern and minimalist style for strong and aesthetic visual messaging.",
-      link: "https://drive.google.com/file/d/1rZGm7wWA3mtX1HZrVeFXZPH-c1SQlYQH/view?usp=drive_link"
+      link: "https://drive.google.com/file/d/1rZGm7wWA3mtX1HZrVeFXZPH-c1SQlYQH/view?usp=drive_link",
+      images: [
+        "/Portofolio/Cover/Poster.png",
+        "/Portofolio/Poster/Poster 1.png",
+        "/Portofolio/Poster/Poster 2.png",
+        "/Portofolio/Poster/Poster 3.png",
+        "/Portofolio/Poster/Poster 4.png",
+        "/Portofolio/Poster/Poster 5.png",
+        "/Portofolio/Poster/Poster 6.png"
+      ]
     },
     {
       id: 3,
@@ -104,7 +157,13 @@ export default function App() {
       badge: "DESIGN",
       image: "Thumbnail/printing.png",
       description: "High-quality print designs for branding and promotional needs—professional, eye-catching, and impactful.",
-      link: "https://drive.google.com/file/d/1KkLQFGpxiSVWoWRzezyON1sifRBCVNqE/view?usp=drive_link"
+      link: "https://drive.google.com/file/d/1KkLQFGpxiSVWoWRzezyON1sifRBCVNqE/view?usp=drive_link",
+      images: [
+        "/Portofolio/Cover/printing.png",
+        "/Portofolio/Printing/Printing 1.png",
+        "/Portofolio/Printing/Printing 2.png",
+        "/Portofolio/Printing/Printing 3.png"
+      ]
     },
     {
       id: 4,
@@ -113,7 +172,11 @@ export default function App() {
       badge: "DESIGN",
       image: "Thumbnail/Thumb.png",
       description: "Eye-catching and consistent thumbnails that boost content appeal across digital and social platforms.",
-      link: "https://drive.google.com/file/d/1F__Ii1wOpShC8EK5vEcfyluyxQBlVPw1/view?usp=drive_link"
+      link: "https://drive.google.com/file/d/1F__Ii1wOpShC8EK5vEcfyluyxQBlVPw1/view?usp=drive_link",
+      images: [
+        "/Portofolio/Cover/Thumb.png",
+        "/Portofolio/Thumbnail/Thumbnail.png"
+      ]
     },
     {
       id: 5,
@@ -122,7 +185,12 @@ export default function App() {
       badge: "DESIGN",
       image: "Thumbnail/Product.png",
       description: "Unique and illustrative NFT artworks designed for collectible digital assets with character and value.",
-      link: "https://drive.google.com/file/d/1sxauHbbrU5zB8-hqWfAyU2lsg37lwm64/view?usp=drive_link"
+      link: "https://drive.google.com/file/d/1sxauHbbrU5zB8-hqWfAyU2lsg37lwm64/view?usp=drive_link",
+      images: [
+        "/Portofolio/Cover/Product.png",
+        "/Portofolio/NFT/NFT 1.png",
+        "/Portofolio/NFT/NFT 2.png"
+      ]
     },
     {
       id: 6,
@@ -131,7 +199,12 @@ export default function App() {
       badge: "DESIGN",
       image: "Thumbnail/UIUXX.png",
       description: "User interface and experience designs that are intuitive, aesthetic, and focused on seamless interaction.",
-      link: "https://drive.google.com/file/d/19yDtoJ_cIgSxUag6gOZK14zJK1pDi9w9/view?usp=drive_link"
+      link: "https://drive.google.com/file/d/19yDtoJ_cIgSxUag6gOZK14zJK1pDi9w9/view?usp=drive_link",
+      images: [
+        "/Portofolio/Cover/UIUX.png",
+        "/Portofolio/UI/UX 1.png",
+        "/Portofolio/UI/UX 2.png"
+      ]
     },
     {
       id: 7,
@@ -332,7 +405,7 @@ export default function App() {
         className="fixed w-full top-0 z-50 backdrop-blur-xl"
         style={{ background: "rgba(7, 7, 8, 0.9)", borderBottom: "1px solid rgba(255, 255, 255, 0.08)" }}
       >
-        <div className="max-w-[1400px] mx-auto px-10 py-5">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-5">
           <div className="flex justify-between items-center">
             {/* Logo */}
             <div className="text-2xl font-bold text-white tracking-wide">Vaalls</div>
@@ -435,7 +508,7 @@ export default function App() {
       </nav>
 
       {/* Hero Section */}
-      <section id="about" className="pt-32 pb-24 px-8">
+      <section id="about" className="pt-32 pb-24 px-4 sm:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div className="fade-left">
@@ -528,7 +601,7 @@ export default function App() {
       </section>
 
       {/* Expertise Section */}
-      <section id="experience" className="py-24 px-8">
+      <section id="experience" className="py-24 px-4 sm:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 fade-up">
             <p className="section-subtitle">About Me</p>
@@ -560,7 +633,7 @@ export default function App() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-24 px-8">
+      <section id="projects" className="py-24 px-4 sm:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 fade-up">
             <p className="section-subtitle">My Portfolio</p>
@@ -619,11 +692,18 @@ export default function App() {
                   <div className="flex items-center gap-4">
                     <a 
                       href={project.link} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="text-sm font-semibold inline-flex items-center gap-2 see-project-link"
+                      target={project.category === 'coding' ? "_blank" : undefined}
+                      rel={project.category === 'coding' ? "noopener noreferrer" : undefined}
+                      onClick={(e) => {
+                        if (project.category === 'design' && project.images) {
+                          e.preventDefault();
+                          setSelectedProject(project);
+                          setCurrentImageIndex(0);
+                        }
+                      }}
+                      className="text-sm font-semibold inline-flex items-center gap-2 see-project-link cursor-pointer"
                     >
-                      <i className="fas fa-external-link-alt"></i> See Project{project.category === 'design' ? 's' : ''}
+                      <i className={project.category === 'coding' ? "fas fa-external-link-alt" : "fas fa-images"}></i> See Project{project.category === 'design' ? 's' : ''}
                     </a>
                     {project.github && (
                       <a 
@@ -645,7 +725,7 @@ export default function App() {
 
       {/* Tech Stack Section */}
       <section id="skills" className="py-24 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-8 mb-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 mb-16">
           <div className="text-center fade-up">
             <p className="section-subtitle">Technologies I Work With</p>
             <h2 className="section-title gradient-text">Tech Stack</h2>
@@ -678,7 +758,7 @@ export default function App() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-24 px-8">
+      <section id="contact" className="py-24 px-4 sm:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 fade-up">
             <p className="section-subtitle">Let's Work Together</p>
@@ -775,7 +855,7 @@ export default function App() {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-8 border-t border-zinc-900">
+      <footer className="py-8 px-4 sm:px-8 border-t border-zinc-900">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-400 text-sm">
@@ -796,6 +876,106 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* Design Portfolio Modal Gallery */}
+      {selectedProject && (
+        <div 
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md transition-opacity duration-300"
+          onClick={() => setSelectedProject(null)}
+        >
+          {/* Close button with circular glassmorphism */}
+          <button 
+            className="absolute top-6 right-6 w-11 h-11 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 flex items-center justify-center text-white/70 hover:text-white z-[110] backdrop-blur-md transition-all transform active:scale-95 focus:outline-none"
+            onClick={() => setSelectedProject(null)}
+          >
+            <i className="fas fa-times text-lg"></i>
+          </button>
+
+          {/* Modal Content Wrapper */}
+          <div 
+            className="relative w-full max-w-5xl h-[85vh] flex flex-col items-center justify-between p-4 md:p-8"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header: Title and Counter */}
+            <div className="flex flex-col items-center gap-2 mb-2 select-none">
+              <span className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-white/90 tracking-widest uppercase">
+                {selectedProject.title}
+              </span>
+              <span className="text-sm font-medium text-zinc-400">
+                {currentImageIndex === 0 ? "Cover / Judul" : `Desain ${currentImageIndex}`} — {currentImageIndex + 1} dari {selectedProject.images.length}
+              </span>
+            </div>
+
+            {/* Main Area: Image and Navigation Buttons */}
+            <div className="relative flex-1 w-full flex items-center justify-center group">
+              {/* Prev Button */}
+              {selectedProject.images.length > 1 && (
+                <button 
+                  onClick={() => {
+                    setSlideDirection('prev');
+                    setCurrentImageIndex((prev) => (prev === 0 ? selectedProject.images.length - 1 : prev - 1));
+                  }}
+                  className="absolute left-4 z-20 w-12 h-12 rounded-xl bg-black/40 hover:bg-zinc-900 border border-white/5 hover:border-white/20 flex items-center justify-center text-white/70 hover:text-white backdrop-blur-md transition-all transform hover:scale-105 active:scale-95"
+                >
+                  <i className="fas fa-chevron-left text-lg"></i>
+                </button>
+              )}
+
+              {/* Image Container with dynamic slide direction animation */}
+              <div 
+                className="w-full h-full max-h-[65vh] flex items-center justify-center overflow-hidden rounded-2xl bg-zinc-950/20 border border-white/10 shadow-2xl relative"
+                style={{ backdropFilter: 'blur(10px)' }}
+              >
+                {/* Background soft glow inside image wrapper */}
+                <div 
+                  className="absolute inset-0 pointer-events-none" 
+                  style={{ backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0) 70%)' }}
+                ></div>
+
+                <img 
+                  key={`${currentImageIndex}-${slideDirection}`}
+                  src={selectedProject.images[currentImageIndex]} 
+                  alt={`${selectedProject.title} - ${currentImageIndex === 0 ? "Cover" : `Slide ${currentImageIndex}`}`}
+                  className={`max-w-full max-h-full object-contain select-none z-10 gallery-slide-${slideDirection}`}
+                />
+              </div>
+
+              {/* Next Button */}
+              {selectedProject.images.length > 1 && (
+                <button 
+                  onClick={() => {
+                    setSlideDirection('next');
+                    setCurrentImageIndex((prev) => (prev === selectedProject.images.length - 1 ? 0 : prev + 1));
+                  }}
+                  className="absolute right-4 z-20 w-12 h-12 rounded-xl bg-black/40 hover:bg-zinc-900 border border-white/5 hover:border-white/20 flex items-center justify-center text-white/70 hover:text-white backdrop-blur-md transition-all transform hover:scale-105 active:scale-95"
+                >
+                  <i className="fas fa-chevron-right text-lg"></i>
+                </button>
+              )}
+            </div>
+
+            {/* Footer Area: Pagination Indicator dots */}
+            {selectedProject.images.length > 1 && (
+              <div className="flex gap-2.5 mt-6 flex-wrap justify-center max-w-full overflow-x-auto py-2.5 px-5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                {selectedProject.images.map((_, idx) => (
+                  <button 
+                    key={idx}
+                    onClick={() => {
+                      if (idx === currentImageIndex) return;
+                      setSlideDirection(idx > currentImageIndex ? 'next' : 'prev');
+                      setCurrentImageIndex(idx);
+                    }}
+                    className={`h-2.5 rounded-full transition-all duration-300 ${
+                      idx === currentImageIndex ? 'w-8 bg-white shadow-[0_0_8px_rgba(255,255,255,0.5)]' : 'w-2.5 bg-white/30 hover:bg-white/50'
+                    }`}
+                    title={idx === 0 ? "Cover" : `Slide ${idx}`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
