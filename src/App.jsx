@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 // Custom smooth scroll function to match original UX
 const smoothScrollTo = (targetPosition, duration) => {
@@ -37,7 +37,125 @@ export default function App() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState('next');
-  const [isZoomed, setIsZoomed] = useState(false);
+
+  // High performance GPU-accelerated zoom/pan/swipe states
+  const [scale, setScale] = useState(1);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [imgLoading, setImgLoading] = useState(true);
+
+  const isZoomed = scale > 1;
+  const setIsZoomed = (val) => {
+    if (!val) {
+      setScale(1);
+      setPosition({ x: 0, y: 0 });
+      setIsDragging(false);
+    } else {
+      setScale(2.5);
+      setPosition({ x: 0, y: 0 });
+    }
+  };
+
+  const touchStartPos = useRef({ x: 0, y: 0 });
+  const swipeStart = useRef({ x: 0, y: 0 });
+  const dragMoved = useRef(false);
+  const containerRef = useRef(null);
+  const imageRef = useRef(null);
+
+  const handlePointerDown = (e) => {
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+    if (scale === 1) {
+      swipeStart.current = { x: clientX, y: clientY };
+      return;
+    }
+    
+    if (e.cancelable) e.preventDefault();
+    
+    setIsDragging(true);
+    touchStartPos.current = { x: clientX - position.x, y: clientY - position.y };
+    dragMoved.current = false;
+  };
+
+  const handlePointerMove = (e) => {
+    if (scale === 1) return;
+    if (!isDragging) return;
+    
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    
+    const newX = clientX - touchStartPos.current.x;
+    const newY = clientY - touchStartPos.current.y;
+    
+    const container = containerRef.current;
+    const img = imageRef.current;
+    
+    let boundedX = newX;
+    let boundedY = newY;
+    
+    if (container && img) {
+      const containerWidth = container.clientWidth;
+      const containerHeight = container.clientHeight;
+      
+      const limitX = Math.max(0, (img.clientWidth * scale - containerWidth) / 2);
+      const limitY = Math.max(0, (img.clientHeight * scale - containerHeight) / 2);
+      
+      boundedX = Math.max(-limitX, Math.min(limitX, newX));
+      boundedY = Math.max(-limitY, Math.min(limitY, newY));
+    }
+    
+    const distance = Math.sqrt(
+      Math.pow(newX - position.x, 2) + Math.pow(newY - position.y, 2)
+    );
+    if (distance > 5) {
+      dragMoved.current = true;
+    }
+    
+    setPosition({ x: boundedX, y: boundedY });
+  };
+
+  const handlePointerUp = (e) => {
+    setIsDragging(false);
+    
+    if (scale === 1 && swipeStart.current.x !== 0) {
+      const clientX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+      const clientY = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+      
+      const diffX = clientX - swipeStart.current.x;
+      const diffY = clientY - swipeStart.current.y;
+      
+      if (Math.abs(diffX) > 50 && Math.abs(diffY) < 100) {
+        if (diffX > 0) {
+          setSlideDirection('prev');
+          setCurrentImageIndex((prev) => (prev === 0 ? selectedProject.images.length - 1 : prev - 1));
+        } else {
+          setSlideDirection('next');
+          setCurrentImageIndex((prev) => (prev === selectedProject.images.length - 1 ? 0 : prev + 1));
+        }
+      }
+      swipeStart.current = { x: 0, y: 0 };
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleImageClick = (e) => {
+    if (dragMoved.current) {
+      dragMoved.current = false;
+      return;
+    }
+    
+    if (scale === 1) {
+      setScale(2.5);
+      setPosition({ x: 0, y: 0 });
+    } else {
+      setScale(1);
+      setPosition({ x: 0, y: 0 });
+    }
+  };
 
   // Words for typing animation in hero
   const words = ["UI/UX Designer", "Graphic Designer", "Web Developer"];
@@ -117,6 +235,7 @@ export default function App() {
   // Reset zoom when project or slide changes
   useEffect(() => {
     setIsZoomed(false);
+    setImgLoading(true);
   }, [selectedProject, currentImageIndex]);
 
   // Projects list
@@ -930,32 +1049,57 @@ export default function App() {
                 </button>
               )}
 
-              {/* Image Container with dynamic slide direction and zoom support */}
+              {/* Image Container with dynamic slide direction and GPU zoom/pan */}
               <div 
-                className={`w-full h-full max-h-[70vh] md:max-h-[65vh] rounded-2xl bg-zinc-950/20 border border-white/10 shadow-2xl relative ${
-                  isZoomed ? 'overflow-auto block' : 'flex items-center justify-center overflow-hidden'
-                }`}
+                ref={containerRef}
+                className="w-full h-full max-h-[70vh] md:max-h-[65vh] rounded-2xl bg-zinc-950/20 border border-white/10 shadow-2xl relative flex items-center justify-center overflow-hidden"
                 style={{ backdropFilter: 'blur(10px)' }}
               >
                 {/* Background soft glow inside image wrapper */}
                 {!isZoomed && (
                   <div 
-                    className="absolute inset-0 pointer-events-none" 
+                    className="absolute inset-0 pointer-events-none z-0" 
                     style={{ backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0) 70%)' }}
                   ></div>
                 )}
 
-                <img 
+                {/* Loading spinner */}
+                {imgLoading && (
+                  <div className="absolute inset-0 flex items-center justify-center z-20 bg-zinc-950/40">
+                    <div className="w-10 h-10 border-4 border-t-white border-white/20 rounded-full animate-spin"></div>
+                  </div>
+                )}
+
+                {/* Slide Wrapper for Slide Transition */}
+                <div 
                   key={`${currentImageIndex}-${slideDirection}`}
-                  src={selectedProject.images[currentImageIndex]} 
-                  alt={`${selectedProject.title} - ${currentImageIndex === 0 ? "Cover" : `Slide ${currentImageIndex}`}`}
-                  onClick={() => setIsZoomed(!isZoomed)}
-                  className={`transition-all duration-300 select-none z-10 gallery-slide-${slideDirection} ${
-                    isZoomed 
-                      ? 'w-[250%] md:w-[150%] max-w-none max-h-none h-auto block cursor-zoom-out p-4 md:p-8 mx-auto' 
-                      : 'max-w-full max-h-full object-contain cursor-zoom-in'
-                  }`}
-                />
+                  className={`w-full h-full flex items-center justify-center gallery-slide-${slideDirection}`}
+                >
+                  <img 
+                    ref={imageRef}
+                    src={selectedProject.images[currentImageIndex]} 
+                    alt={`${selectedProject.title} - ${currentImageIndex === 0 ? "Cover" : `Slide ${currentImageIndex}`}`}
+                    decoding="async"
+                    onLoad={() => setImgLoading(false)}
+                    onMouseDown={handlePointerDown}
+                    onMouseMove={handlePointerMove}
+                    onMouseUp={handlePointerUp}
+                    onMouseLeave={handleMouseLeave}
+                    onTouchStart={handlePointerDown}
+                    onTouchMove={handlePointerMove}
+                    onTouchEnd={handlePointerUp}
+                    onClick={handleImageClick}
+                    style={{
+                      transform: `translate3d(${position.x}px, ${position.y}px, 0px) scale(${scale})`,
+                      transition: isDragging ? 'none' : 'transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                      willChange: 'transform',
+                      touchAction: scale > 1 ? 'none' : 'pan-y',
+                    }}
+                    className={`max-w-full max-h-full object-contain select-none z-10 ${
+                      scale > 1 ? 'cursor-zoom-out' : 'cursor-zoom-in'
+                    }`}
+                  />
+                </div>
               </div>
 
               {/* Next Button (Desktop only) */}
