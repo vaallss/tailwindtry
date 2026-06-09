@@ -32,6 +32,7 @@ export default function App() {
   
   // Mouse position state for spotlight glow
   const [mousePos, setMousePos] = useState({ x: -1000, y: -1000 });
+  const [isSpotlightHovered, setIsSpotlightHovered] = useState(false);
 
   // Modal Gallery state for Design projects
   const [selectedProject, setSelectedProject] = useState(null);
@@ -164,13 +165,33 @@ export default function App() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(100);
 
-  // Mouse move listener for spotlight effect
+  // Mouse move and hover listener for spotlight effect
   useEffect(() => {
     const handleMouseMove = (e) => {
       setMousePos({ x: e.clientX, y: e.clientY });
     };
+    const handleMouseOver = (e) => {
+      const target = e.target;
+      if (
+        target.closest('a') || 
+        target.closest('button') || 
+        target.closest('.project-card') || 
+        target.closest('.expertise-card') || 
+        target.closest('.floating-badge') || 
+        target.closest('.marquee-item') ||
+        target.closest('.social-icon')
+      ) {
+        setIsSpotlightHovered(true);
+      } else {
+        setIsSpotlightHovered(false);
+      }
+    };
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseover', handleMouseOver);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseover', handleMouseOver);
+    };
   }, []);
 
   // Typing animation loop
@@ -333,16 +354,46 @@ export default function App() {
     },
     {
       id: 7,
+      title: "Nutrify Scan",
+      category: "coding",
+      badge: "AI / FULLSTACK",
+      image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=450&fit=crop",
+      description: "Full-stack food scanner utilizing deep learning (CNN) for image identification, Google Gemini AI for personalized health advice, and interactive charts.",
+      link: "https://github.com/iqbalapriand",
+      github: "https://github.com/iqbalapriand"
+    },
+    {
+      id: 8,
+      title: "Bookshelf API",
+      category: "coding",
+      badge: "BACKEND",
+      image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600&h=450&fit=crop",
+      description: "A clean and tested RESTful API for book management, featuring request validation, CRUD endpoints, and structured responses.",
+      link: "https://github.com/iqbalapriand/bookshelf-api",
+      github: "https://github.com/iqbalapriand/bookshelf-api"
+    },
+    {
+      id: 9,
+      title: "E-Commerce Market",
+      category: "coding",
+      badge: "FULLSTACK",
+      image: "https://images.unsplash.com/photo-1563013544-824ae1d704d3?w=600&h=450&fit=crop",
+      description: "A responsive e-commerce web application featuring product catalogs, cart functionalities, and session-based authentication.",
+      link: "https://github.com/iqbalapriand/e-commerce",
+      github: "https://github.com/iqbalapriand/e-commerce"
+    },
+    {
+      id: 10,
       title: "OpenJob RESTful API",
       category: "coding",
-      badge: "CODING",
+      badge: "BACKEND",
       image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=450&fit=crop",
       description: "A robust and structured Node.js/Express RESTful API for job recruitment, handling user authentication and application flows.",
       link: "https://github.com/iqbalapriand/openjob-restful-api",
       github: "https://github.com/iqbalapriand/openjob-restful-api"
     },
     {
-      id: 8,
+      id: 11,
       title: "Notes Login App",
       category: "coding",
       badge: "CODING",
@@ -352,7 +403,7 @@ export default function App() {
       github: "https://github.com/iqbalapriand/notes-login-app"
     },
     {
-      id: 9,
+      id: 12,
       title: "Web Apotek",
       category: "coding",
       badge: "CODING",
@@ -362,7 +413,7 @@ export default function App() {
       github: "https://github.com/iqbalapriand/web-apotek"
     },
     {
-      id: 10,
+      id: 13,
       title: "SmartFan IoT System",
       category: "coding",
       badge: "CODING",
@@ -372,7 +423,17 @@ export default function App() {
       github: "https://github.com/iqbalapriand/smartfan-app"
     },
     {
-      id: 11,
+      id: 14,
+      title: "Game Development",
+      category: "coding",
+      badge: "UNITY / BLENDER",
+      image: "https://images.unsplash.com/photo-1551103782-8ab07afd45c1?w=600&h=450&fit=crop",
+      description: "A 3D gameplay project developed in Unity, complete with custom environment assets modeled from scratch in Blender.",
+      link: "https://github.com/iqbalapriand",
+      github: "https://github.com/iqbalapriand"
+    },
+    {
+      id: 15,
       title: "Suwit Jawa Game",
       category: "coding",
       badge: "CODING",
@@ -382,7 +443,7 @@ export default function App() {
       github: "https://github.com/iqbalapriand/suwit-jawa"
     },
     {
-      id: 12,
+      id: 16,
       title: "Aplikasi Quiz",
       category: "coding",
       badge: "CODING",
@@ -390,6 +451,16 @@ export default function App() {
       description: "Interactive online quiz platform built using PHP and MySQL, complete with category management and grading system.",
       link: "https://github.com/iqbalapriand/aplikasiquiz.io",
       github: "https://github.com/iqbalapriand/aplikasiquiz.io"
+    },
+    {
+      id: 17,
+      title: "CRUD Web Apps",
+      category: "coding",
+      badge: "REACT / JS",
+      image: "https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?w=600&h=450&fit=crop",
+      description: "A series of responsive CRUD applications featuring client-side state management, databases, and responsive layouts.",
+      link: "https://github.com/iqbalapriand",
+      github: "https://github.com/iqbalapriand"
     }
   ];
 
@@ -517,7 +588,7 @@ export default function App() {
 
       {/* Spotlight Cursor Glow */}
       <div 
-        className="spotlight-glow" 
+        className={`spotlight-glow ${isSpotlightHovered ? 'spotlight-active' : ''}`} 
         style={{ left: `${mousePos.x}px`, top: `${mousePos.y}px` }}
       ></div>
 
@@ -676,7 +747,7 @@ export default function App() {
                   Projects <i className="fas fa-arrow-right"></i>
                 </a>
                 <a 
-                  href="resume/CV_Iqbal_Apriand_Juartono.pdf"
+                  href="/resume/CV_Iqbal_Apriand_Juartono.pdf"
                   download="CV_Iqbal_Apriand_Juartono.pdf"
                   className="btn-secondary"
                 >

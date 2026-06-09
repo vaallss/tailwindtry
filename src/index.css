@@ -50,15 +50,22 @@ html, body {
     left: 0;
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.035) 0%, rgba(255, 255, 255, 0) 70%);
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, rgba(6, 182, 212, 0.04) 30%, rgba(0, 0, 0, 0) 70%);
     pointer-events: none;
     transform: translate(-50%, -50%);
     z-index: 1;
     mix-blend-mode: screen;
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
+}
+
+.spotlight-glow.spotlight-active {
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, rgba(6, 182, 212, 0.07) 35%, rgba(0, 0, 0, 0) 70%);
 }
 
 .gradient-text {
-    background: linear-gradient(135deg, #FFFFFF 0%, #A1A1AA 100%);
+    background: linear-gradient(135deg, #FFFFFF 10%, #E2E8F0 50%, #94A3B8 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -180,9 +187,9 @@ html, body {
 }
 
 .expertise-card:hover {
-    border-color: var(--border-hover);
+    border-color: rgba(255, 255, 255, 0.2);
     transform: translateY(-5px);
-    box-shadow: 0 10px 40px rgba(255, 255, 255, 0.05);
+    box-shadow: 0 15px 50px rgba(99, 102, 241, 0.1), 0 0 25px rgba(99, 102, 241, 0.05);
 }
 
 .expertise-icon {
@@ -232,8 +239,8 @@ html, body {
 
 .project-card:hover {
     transform: translateY(-8px);
-    border-color: var(--border-hover);
-    box-shadow: 0 15px 50px rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 50px rgba(99, 102, 241, 0.1), 0 0 25px rgba(99, 102, 241, 0.05);
 }
 
 .project-image {
@@ -437,8 +444,10 @@ html, body {
     transition: transform 0.3s ease;
 }
 
-.profile-container:hover .profile-img-element {
-    transform: translateY(-4px) scale(1.005);
+.profile-container:hover .profile-frame-box {
+    border-color: #6366f1;
+    transform: scale(1.01);
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.35), inset 0 0 20px rgba(6, 182, 212, 0.15);
 }
 
 /* Grayscale Floating Tech Badges */
@@ -459,11 +468,39 @@ html, body {
 }
 
 .floating-badge:hover {
-    transform: scale(1.15) translateY(-5px);
-    border-color: #ffffff;
-    color: #ffffff;
+    animation: none !important;
+    transform: scale(1.2) translateY(-5px);
     cursor: pointer;
-    box-shadow: 0 12px 24px rgba(255, 255, 255, 0.15);
+}
+
+.floating-badge.badge-ps:hover {
+    border-color: #31A8FF;
+    color: #31A8FF;
+    box-shadow: 0 0 20px rgba(49, 168, 255, 0.45);
+}
+
+.floating-badge.badge-pr:hover {
+    border-color: #EA77FF;
+    color: #EA77FF;
+    box-shadow: 0 0 20px rgba(234, 119, 255, 0.45);
+}
+
+.floating-badge.badge-ai:hover {
+    border-color: #FF9A00;
+    color: #FF9A00;
+    box-shadow: 0 0 20px rgba(255, 154, 0, 0.45);
+}
+
+.floating-badge.badge-code:hover {
+    border-color: #06B6D4;
+    color: #06B6D4;
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.45);
+}
+
+.floating-badge.badge-figma:hover {
+    border-color: #FF7262;
+    color: #FF7262;
+    box-shadow: 0 0 20px rgba(255, 114, 98, 0.45);
 }
 
 .badge-ps {
@@ -594,27 +631,27 @@ html, body {
     position: fixed;
     border-radius: 50%;
     filter: blur(120px);
-    opacity: 0.04;
+    opacity: 0.12;
     pointer-events: none;
     z-index: 0;
 }
 
 .glow-orb-1 {
-    width: 500px;
-    height: 500px;
-    background: #FFFFFF;
-    top: 10%;
-    right: 10%;
-    animation: float 8s ease-in-out infinite;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+    top: -10%;
+    right: -10%;
+    animation: float 12s ease-in-out infinite;
 }
 
 .glow-orb-2 {
-    width: 400px;
-    height: 400px;
-    background: #FFFFFF;
-    bottom: 20%;
-    left: 15%;
-    animation: float 10s ease-in-out infinite reverse;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+    bottom: 10%;
+    left: -10%;
+    animation: float 15s ease-in-out infinite reverse;
 }
 
 section {
