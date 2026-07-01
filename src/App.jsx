@@ -27,7 +27,7 @@ const smoothScrollTo = (targetPosition, duration) => {
 export default function App() {
   const [activeSection, setActiveSection] = useState('about');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeFilter, setActiveFilter] = useState('all');
+  const [activeFilter, setActiveFilter] = useState('design');
   const [showScrollTop, setShowScrollTop] = useState(false);
   
   // Mouse position state for spotlight glow
@@ -262,12 +262,31 @@ export default function App() {
   // Projects list
   const projects = [
     {
+      id: 6,
+      title: "UI/UX",
+      category: "design",
+      badge: "DESIGN",
+      image: "Thumbnail/UIUXX.png",
+      description: "Perancangan UI/UX aplikasi mobile yang berfokus pada problem solving nyata, dibuat untuk kebutuhan lomba tingkat nasional dan portofolio profesional.",
+      link: "https://drive.google.com/file/d/19yDtoJ_cIgSxUag6gOZK14zJK1pDi9w9/view?usp=drive_link",
+      images: [
+        "/Portofolio/Cover/UIUX.png",
+        "/Portofolio/UI/UX 1.png",
+        "/Portofolio/UI/UX 2.png"
+      ],
+      slideDescriptions: [
+        "Cover Portofolio UI/UX - Konsep solusi digital interaktif. Proyek ini merupakan hasil perancangan desain aplikasi mobile yang diikutsertakan dalam kompetisi UI/UX tingkat nasional, di mana tantangannya adalah memecahkan problem nyata pengguna sehari-hari lewat pendekatan user-centered design.",
+        "UX Research & Wireframing: Proses riset dimulai dari tahap Empathize dengan mewawancarai target pengguna untuk memetakan pain points mereka. Setelah merumuskan inti masalah, saya membuat User Persona dan Customer Journey Map. Berdasarkan temuan ini, saya merancang Low-Fidelity Wireframes di Figma untuk menyusun tata letak kasarnya terlebih dahulu, memastikan arsitektur informasi dan user flow berjalan logis sebelum masuk ke visual design.",
+        "UI Design & Interactive Prototyping: Di tahap ini, kerangka kasar wireframe dipoles menjadi visual berkelas (High-Fidelity). Saya menyusun Design System yang komprehensif mulai dari pemilihan tipografi, palet warna aksesibel, hingga komponen UI seperti button, input field, dan card agar visualnya konsisten. Terakhir, saya membuat prototype interaktif di Figma untuk keperluan Usability Testing agar fungsionalitas aplikasi bisa disimulasikan langsung oleh pengguna."
+      ]
+    },
+    {
       id: 1,
       title: "Feeds",
       category: "design",
       badge: "DESIGN",
       image: "Thumbnail/Feeds.png",
-      description: "Social media feed designs with consistent visuals that enhance brand identity and user engagement.",
+      description: "Kumpulan desain konten media sosial yang estetik untuk kebutuhan promosi organisasi mahasiswa, klien freelance, dan lomba.",
       link: "https://drive.google.com/file/d/1wLVgF1hyQv6PyaUJKsO_SLVFwequcZf8/view?usp=sharing",
       images: [
         "/Portofolio/Cover/Feeds.png",
@@ -276,6 +295,14 @@ export default function App() {
         "/Portofolio/Feeds/Feeds 3.png",
         "/Portofolio/Feeds/Feeds 4.png",
         "/Portofolio/Feeds/Feeds 5.png"
+      ],
+      slideDescriptions: [
+        "Cover Portofolio Feeds - Kumpulan karya desain visual media sosial. Di sini saya mengelompokkan desain feed berdasarkan tujuan publikasinya, mulai dari branding organisasi kampus hingga promosi produk komersial.",
+        "Desain Feed untuk Kebutuhan Organisasi Kampus: Dibuat khusus untuk akun media sosial resmi organisasi mahasiswa. Fokus utamanya adalah penyampaian informasi kegiatan yang rapi, formal, namun tetap terlihat kekinian dan menarik minat mahasiswa lain.",
+        "Desain Feed untuk Proyek Klien (Freelance): Desain komersial untuk mempromosikan produk klien. Menggunakan pendekatan visual minimalis dan penataan layout yang menonjolkan keunggulan produk untuk meningkatkan konversi penjualan.",
+        "Desain Feed untuk Lomba & Eksplorasi Mandiri: Proyek eksperimental untuk menguji ide-ide layout baru yang lebih dinamis, tipografi yang berani (bold typography), serta kombinasi warna yang kontras untuk lomba desain grafis.",
+        "Desain Carousel Menyambung (Seamless Carousel): Teknik layout interaktif di mana gambar berlanjut tanpa putus saat digeser. Efektif banget untuk menaikkan dwell-time (waktu bertahan) pengunjung di akun Instagram.",
+        "Aesthetic Grid Template: Perancangan visual feed secara keseluruhan (puzzle/alternating layout) supaya ketika profil Instagram dikunjungi, tampilan keseluruhan feed terlihat senada, profesional, dan estetik."
       ]
     },
     {
@@ -284,7 +311,7 @@ export default function App() {
       category: "design",
       badge: "DESIGN",
       image: "Thumbnail/Poster.png",
-      description: "Creative poster designs with a modern and minimalist style for strong and aesthetic visual messaging.",
+      description: "Desain poster kreatif dengan gaya modern dan minimalis untuk keperluan kampanye sosial, acara organisasi, dan proyek lomba.",
       link: "https://drive.google.com/file/d/1rZGm7wWA3mtX1HZrVeFXZPH-c1SQlYQH/view?usp=drive_link",
       images: [
         "/Portofolio/Cover/Poster.png",
@@ -294,6 +321,15 @@ export default function App() {
         "/Portofolio/Poster/Poster 4.png",
         "/Portofolio/Poster/Poster 5.png",
         "/Portofolio/Poster/Poster 6.png"
+      ],
+      slideDescriptions: [
+        "Cover Portofolio Poster - Kumpulan karya desain poster publik dan komersial dengan berbagai tema visual.",
+        "Poster Edukasi & Kampanye Organisasi: Poster infografis untuk menyebarkan info publik atau materi kampanye sosial dari organisasi kampus. Mengedepankan tata letak yang bersih dan keterbacaan teks yang tinggi.",
+        "Poster Perlombaan / Eksplorasi Seni: Karya poster dengan visualisasi dramatis dan manipulasi foto tingkat lanjut (photo manipulation) yang dibuat khusus untuk bersaing di kompetisi desain poster nasional.",
+        "Poster Promosi Acara Klien: Dibuat untuk klien komersial yang sedang mengadakan webinar atau konser. Penekanan visual ada pada nama pembicara/bintang tamu, waktu acara, serta Call-to-Action (pembelian tiket) yang jelas.",
+        "Poster Kesadaran Sosial (Social Campaign): Desain dengan pesan mendalam menggunakan ilustrasi simbolis untuk meningkatkan kesadaran masyarakat terhadap isu-isu penting seperti lingkungan atau kesehatan mental.",
+        "Poster Eksperimental Texturing: Proyek latihan mandiri mengeksplorasi penggunaan grain textures, efek halftone, dan gaya retro modern untuk menciptakan estetika poster yang unik.",
+        "Poster Promosi Produk Komersial: Desain yang berfokus pada keindahan produk (product photography) dipadukan dengan tipografi minimalis untuk menarik perhatian calon pembeli."
       ]
     },
     {
@@ -302,13 +338,19 @@ export default function App() {
       category: "design",
       badge: "DESIGN",
       image: "Thumbnail/printing.png",
-      description: "High-quality print designs for branding and promotional needs—professional, eye-catching, and impactful.",
+      description: "Desain media cetak seperti brosur, kaos promosi, dan banner panggung untuk event organisasi maupun klien bisnis.",
       link: "https://drive.google.com/file/d/1KkLQFGpxiSVWoWRzezyON1sifRBCVNqE/view?usp=drive_link",
       images: [
         "/Portofolio/Cover/printing.png",
         "/Portofolio/Printing/Printing 1.png",
         "/Portofolio/Printing/Printing 2.png",
         "/Portofolio/Printing/Printing 3.png"
+      ],
+      slideDescriptions: [
+        "Cover Portofolio Printing - Kumpulan desain cetak. Proyek di kategori ini disiapkan dengan format warna CMYK dan resolusi tinggi agar hasil cetaknya tajam dan tidak pecah saat masuk ke percetakan.",
+        "Desain Brosur Lipat Tiga Organisasi: Brosur profil organisasi untuk dibagikan saat penerimaan anggota baru. Desain dibuat informatif dengan pembagian lipatan yang pas agar nyaman dibaca dan tidak membingungkan.",
+        "Desain Kaos & Merchandise Klien: Desain grafis siap sablon (vektor) untuk kaos komunitas dan merchandise promosi bisnis klien, mengutamakan estetika yang kasual agar nyaman dipakai harian.",
+        "Desain Spanduk & Banner Event: Desain baliho outdoor skala besar untuk promosi acara di jalan raya serta banner backdrop panggung event organisasi kampus."
       ]
     },
     {
@@ -317,11 +359,15 @@ export default function App() {
       category: "design",
       badge: "DESIGN",
       image: "Thumbnail/Thumb.png",
-      description: "Eye-catching and consistent thumbnails that boost content appeal across digital and social platforms.",
+      description: "Desain thumbnail video digital yang mencolok dan beresolusi tinggi untuk meningkatkan CTR (Click-Through Rate) di YouTube.",
       link: "https://drive.google.com/file/d/1F__Ii1wOpShC8EK5vEcfyluyxQBlVPw1/view?usp=drive_link",
       images: [
         "/Portofolio/Cover/Thumb.png",
         "/Portofolio/Thumbnail/Thumbnail.png"
+      ],
+      slideDescriptions: [
+        "Cover Portofolio Thumbnail - Kumpulan desain gambar pratinjau (thumbnail) untuk konten video digital.",
+        "YouTube Thumbnail (Klien & Proyek Pribadi): Didesain dengan kontras warna yang sangat tinggi, ekspresi subjek yang diperjelas, dan teks ringkas berukuran besar agar video menonjol di halaman beranda YouTube."
       ]
     },
     {
@@ -330,26 +376,17 @@ export default function App() {
       category: "design",
       badge: "DESIGN",
       image: "Thumbnail/Product.png",
-      description: "Unique and illustrative NFT artworks designed for collectible digital assets with character and value.",
+      description: "Karya seni digital dan ilustrasi karakter unik yang dirancang khusus untuk aset digital di blockchain atau proyek klien.",
       link: "https://drive.google.com/file/d/1sxauHbbrU5zB8-hqWfAyU2lsg37lwm64/view?usp=drive_link",
       images: [
         "/Portofolio/Cover/Product.png",
         "/Portofolio/NFT/NFT 1.png",
         "/Portofolio/NFT/NFT 2.png"
-      ]
-    },
-    {
-      id: 6,
-      title: "UI/UX",
-      category: "design",
-      badge: "DESIGN",
-      image: "Thumbnail/UIUXX.png",
-      description: "User interface and experience designs that are intuitive, aesthetic, and focused on seamless interaction.",
-      link: "https://drive.google.com/file/d/19yDtoJ_cIgSxUag6gOZK14zJK1pDi9w9/view?usp=drive_link",
-      images: [
-        "/Portofolio/Cover/UIUX.png",
-        "/Portofolio/UI/UX 1.png",
-        "/Portofolio/UI/UX 2.png"
+      ],
+      slideDescriptions: [
+        "Cover Portofolio NFT & Digital Art - Kumpulan aset seni digital berbasis vektor dan raster.",
+        "Koleksi NFT Komunitas: Desain karakter bertema fiksi ilmiah dan futuristik dengan variasi aksesoris unik untuk koleksi digital komunitas.",
+        "Digital Art Commission (Klien): Ilustrasi karakter kustom yang dipesan oleh klien untuk kebutuhan profil pribadi atau merchandise dengan lisensi komersial."
       ]
     },
     {
@@ -358,7 +395,7 @@ export default function App() {
       category: "coding",
       badge: "AI / FULLSTACK",
       image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=450&fit=crop",
-      description: "Full-stack food scanner utilizing deep learning (CNN) for image identification, Google Gemini AI for personalized health advice, and interactive charts.",
+      description: "Aplikasi web full-stack pendeteksi nutrisi makanan. Sistem ini menggunakan model deep learning (CNN) untuk mendeteksi jenis makanan dari foto kamera, lalu memanfaatkan Google Gemini AI untuk memberikan rekomendasi kesehatan personal, lengkap dengan visualisasi grafik riwayat kalori pengguna.",
       link: "https://github.com/iqbalapriand",
       github: "https://github.com/iqbalapriand"
     },
@@ -368,7 +405,7 @@ export default function App() {
       category: "coding",
       badge: "BACKEND",
       image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600&h=450&fit=crop",
-      description: "A clean and tested RESTful API for book management, featuring request validation, CRUD endpoints, and structured responses.",
+      description: "RESTful API bersih dan teruji untuk manajemen buku digital. Dibuat menggunakan Node.js dengan framework Hapi, memiliki fitur validasi request yang ketat, operasi CRUD lengkap, pencarian buku berdasarkan status, serta pengujian otomatis menggunakan Postman untuk menjamin keandalan API.",
       link: "https://github.com/iqbalapriand/bookshelf-api",
       github: "https://github.com/iqbalapriand/bookshelf-api"
     },
@@ -377,8 +414,8 @@ export default function App() {
       title: "E-Commerce Market",
       category: "coding",
       badge: "FULLSTACK",
-      image: "https://images.unsplash.com/photo-1563013544-824ae1d704d3?w=600&h=450&fit=crop",
-      description: "A responsive e-commerce web application featuring product catalogs, cart functionalities, and session-based authentication.",
+      image: "https://images.unsplash.com/photo-1557821552-17105176677c?w=600&h=450&fit=crop",
+      description: "Website e-commerce responsif dengan fitur lengkap. Menyediakan katalog produk dinamis, keranjang belanja interaktif, kalkulasi harga otomatis, serta sistem autentikasi sesi user yang aman untuk mensimulasikan alur belanja online nyata.",
       link: "https://github.com/iqbalapriand/e-commerce",
       github: "https://github.com/iqbalapriand/e-commerce"
     },
@@ -388,7 +425,7 @@ export default function App() {
       category: "coding",
       badge: "BACKEND",
       image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=450&fit=crop",
-      description: "A robust and structured Node.js/Express RESTful API for job recruitment, handling user authentication and application flows.",
+      description: "Backend API untuk platform rekrutmen kerja online. Dibangun menggunakan Express.js dan database relasional, menangani pendaftaran pelamar kerja, autentikasi JWT, sistem kelola lowongan oleh admin perusahaan, serta pengunggahan file CV.",
       link: "https://github.com/iqbalapriand/openjob-restful-api",
       github: "https://github.com/iqbalapriand/openjob-restful-api"
     },
@@ -398,7 +435,7 @@ export default function App() {
       category: "coding",
       badge: "CODING",
       image: "https://images.unsplash.com/photo-1517842645767-c639042777db?w=600&h=450&fit=crop",
-      description: "A secure note-taking web application featuring React, JWT authentication, user registration, and clean session management.",
+      description: "Aplikasi catatan digital aman berbasis web. Menggunakan React JS untuk antarmuka pengguna yang responsif, terintegrasi dengan autentikasi JSON Web Token (JWT) pada sisi client untuk memastikan catatan hanya bisa diakses oleh pemiliknya.",
       link: "https://github.com/iqbalapriand/notes-login-app",
       github: "https://github.com/iqbalapriand/notes-login-app"
     },
@@ -408,7 +445,7 @@ export default function App() {
       category: "coding",
       badge: "CODING",
       image: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?w=600&h=450&fit=crop",
-      description: "Pharmacy inventory management web application for tracking medical stock, record-keeping, and transaction reports.",
+      description: "Sistem informasi inventory apotek berbasis web. Membantu apoteker melacak stok obat masuk dan keluar, mencatat transaksi harian, serta menghasilkan laporan penjualan bulanan secara otomatis guna meminimalkan kesalahan pencatatan manual.",
       link: "https://github.com/iqbalapriand/web-apotek",
       github: "https://github.com/iqbalapriand/web-apotek"
     },
@@ -418,7 +455,7 @@ export default function App() {
       category: "coding",
       badge: "CODING",
       image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=450&fit=crop",
-      description: "An IoT system built with C++ for microcontrollers that dynamically adjusts cooling fan speeds based on real-time temperature data.",
+      description: "Sistem IoT pengatur kecepatan kipas angin otomatis. Dibuat menggunakan mikrokontroler (C++) dan sensor suhu. Sistem akan membaca suhu ruangan secara real-time lalu otomatis mengatur kecepatan kipas lewat modul driver motor agar hemat energi.",
       link: "https://github.com/iqbalapriand/smartfan-app",
       github: "https://github.com/iqbalapriand/smartfan-app"
     },
@@ -428,7 +465,7 @@ export default function App() {
       category: "coding",
       badge: "UNITY / BLENDER",
       image: "https://images.unsplash.com/photo-1551103782-8ab07afd45c1?w=600&h=450&fit=crop",
-      description: "A 3D gameplay project developed in Unity, complete with custom environment assets modeled from scratch in Blender.",
+      description: "Proyek demo game aksi 3D menggunakan Unity Engine. Seluruh aset lingkungan (environment) dan karakter dalam game dimodelkan dari nol memakai Blender, kemudian diprogram pergerakannya menggunakan bahasa C# di Unity.",
       link: "https://github.com/iqbalapriand",
       github: "https://github.com/iqbalapriand"
     },
@@ -438,7 +475,7 @@ export default function App() {
       category: "coding",
       badge: "CODING",
       image: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=600&h=450&fit=crop",
-      description: "An interactive web game featuring classic Indonesian finger-matching suwit gameplay with animations and score tracking.",
+      description: "Game interaktif sederhana adaptasi dari permainan tradisional suwit Jawa. Dikembangkan dengan HTML5, CSS3, dan Vanilla JavaScript untuk melatih logika manipulasi DOM, lengkap dengan animasi interaktif dan sistem pencatat skor.",
       link: "https://github.com/iqbalapriand/suwit-jawa",
       github: "https://github.com/iqbalapriand/suwit-jawa"
     },
@@ -448,7 +485,7 @@ export default function App() {
       category: "coding",
       badge: "CODING",
       image: "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=600&h=450&fit=crop",
-      description: "Interactive online quiz platform built using PHP and MySQL, complete with category management and grading system.",
+      description: "Platform ujian online interaktif untuk sekolah atau komunitas. Dikembangkan menggunakan PHP native dan database MySQL, memiliki dashboard khusus admin untuk membuat bank soal, mengatur durasi kuis, serta rekapitulasi nilai otomatis.",
       link: "https://github.com/iqbalapriand/aplikasiquiz.io",
       github: "https://github.com/iqbalapriand/aplikasiquiz.io"
     },
@@ -458,7 +495,7 @@ export default function App() {
       category: "coding",
       badge: "REACT / JS",
       image: "https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?w=600&h=450&fit=crop",
-      description: "A series of responsive CRUD applications featuring client-side state management, databases, and responsive layouts.",
+      description: "Kumpulan aplikasi manajemen data (CRUD) menggunakan React JS. Berfokus pada implementasi state management lokal (useState/useReducer), validasi form sisi klien, serta integrasi penyimpanan lokal (localStorage) untuk persistensi data.",
       link: "https://github.com/iqbalapriand",
       github: "https://github.com/iqbalapriand"
     }
@@ -571,7 +608,6 @@ export default function App() {
   };
 
   const filteredProjects = projects.filter(project => {
-    if (activeFilter === 'all') return true;
     return project.category === activeFilter;
   });
 
@@ -838,12 +874,6 @@ export default function App() {
           
           {/* Filter Buttons */}
           <div className="flex justify-center gap-4 mb-12 fade-up">
-            <button 
-              className={`filter-btn ${activeFilter === 'all' ? 'active' : ''}`}
-              onClick={() => setActiveFilter('all')}
-            >
-              All Projects
-            </button>
             <button 
               className={`filter-btn ${activeFilter === 'design' ? 'active' : ''}`}
               onClick={() => setActiveFilter('design')}
@@ -1123,7 +1153,7 @@ export default function App() {
               {/* Image Container with dynamic slide direction and GPU zoom/pan */}
               <div 
                 ref={containerRef}
-                className="w-full h-full max-h-[70vh] md:max-h-[65vh] rounded-2xl bg-zinc-950/20 border border-white/10 shadow-2xl relative flex items-center justify-center overflow-hidden"
+                className="w-full h-full max-h-[50vh] md:max-h-[55vh] rounded-2xl bg-zinc-950/20 border border-white/10 shadow-2xl relative flex items-center justify-center overflow-hidden"
                 style={{ backdropFilter: 'blur(10px)' }}
               >
                 {/* Background soft glow inside image wrapper */}
@@ -1233,6 +1263,15 @@ export default function App() {
                     <i className="fas fa-chevron-right"></i>
                   </button>
                 )}
+              </div>
+            )}
+
+            {/* Slide-specific detailed description overlay */}
+            {selectedProject.slideDescriptions?.[currentImageIndex] && !isZoomed && (
+              <div className="w-full max-w-3xl mt-4 px-6 py-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md text-center transition-all duration-300">
+                <p className="text-zinc-300 text-sm md:text-base leading-relaxed">
+                  {selectedProject.slideDescriptions[currentImageIndex]}
+                </p>
               </div>
             )}
           </div>
