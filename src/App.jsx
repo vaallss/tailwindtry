@@ -159,7 +159,7 @@ export default function App() {
   };
 
   // Words for typing animation in hero
-  const words = ["UI/UX Designer", "Creative Designer", "UI/UX Developer"];
+  const words = ["UI/UX Designer", "Creative Designer", "Fullstack Developer"];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -275,17 +275,15 @@ export default function App() {
         "/Portofolio/UI/UX 2.png",
         "/Portofolio/UI/UX 3.png",
         "/Portofolio/UI/UX 4.png",
-        "/Portofolio/UI/UX 5.png",
         "/Portofolio/UI/UX 6.png"
       ],
       slideDescriptions: [
         "Cover Portofolio UI/UX - Konsep solusi digital interaktif. Proyek ini merupakan hasil perancangan desain aplikasi mobile yang diikutsertakan dalam kompetisi UI/UX tingkat nasional, di mana tantangannya adalah memecahkan problem nyata pengguna sehari-hari lewat pendekatan user-centered design.",
-        "UX Research & Wireframing: Proses riset dimulai dari tahap Empathize dengan mewawancarai target pengguna untuk memetakan pain points mereka. Berdasarkan temuan ini, saya merancang Low-Fidelity Wireframes di Figma untuk menyusun tata letak kasarnya terlebih dahulu, memastikan arsitektur informasi dan user flow berjalan logis sebelum masuk to visual design.",
-        "TemanCare Mobile App Design - High Fidelity UI: Halaman utama dan fitur pelacak kesehatan mental yang intuitif, dirancang dengan pendekatan user-centered untuk mempermudah akses konsultasi dan jurnal harian pengguna.",
-        "TrackHub Logistics App Design - High Fidelity UI: Tampilan dashboard dan pelacakan kurir real-time untuk aplikasi logistik, mengoptimalkan efisiensi manajemen pengiriman barang bagi pengguna personal maupun bisnis.",
-        "UMORA & SiaGas App Design: Eksplorasi antarmuka aplikasi pemesanan layanan rumah tangga (UMORA) dan aplikasi tanggap darurat bencana (SiaGas) dengan tata letak yang bersih dan navigasi cepat.",
-        "Nutrify & KreatifCloud Dashboard Design: Perancangan dashboard web untuk analisis nutrisi harian (Nutrify) dan manajemen proyek kreatif kolaboratif (KreatifCloud) dengan visualisasi data yang informatif.",
-        "Final Design Showcase: Tampilan komprehensif dari seluruh screen utama aplikasi yang menunjukkan alur perjalanan pengguna (user journey) yang mulus dari awal hingga akhir."
+        "UX Research & Wireframing: Proses riset dimulai dari tahap Empathize dengan mewawancarai target pengguna untuk memetakan pain points mereka. Berdasarkan temuan ini, saya merancang Low-Fidelity Wireframes di Figma untuk menyusun tata letak kasarnya terlebih dahulu, memastikan arsitektur informasi dan user flow berjalan logis sebelum masuk ke visual design.",
+        "Thundr Grow & Figma Website: Perancangan antarmuka aplikasi akselerasi bisnis UMKM (Thundr Grow) yang mempermudah manajemen penjualan, serta desain landing page portofolio pribadi berbasis Figma yang modern dan responsif.",
+        "TernakCare & Career Platform: Eksplorasi desain UI/UX aplikasi manajemen peternakan pintar (TernakCare) untuk memudahkan pelacakan hewan ternak, dan platform pengembangan karir mahasiswa berbasis project-based learning.",
+        "BiViTas & TrackHub: Desain antarmuka aplikasi administrasi sekolah digital (BiViTas) untuk memantau data siswa secara terpadu, serta aplikasi pelacakan pengiriman logistik real-time (TrackHub) yang efisien.",
+        "Dark Theme UI Showcase: Eksplorasi desain antarmuka tema gelap (Dark Mode) untuk berbagai halaman aplikasi, mengoptimalkan kenyamanan visual pengguna saat kondisi minim cahaya."
       ]
     },
     {
