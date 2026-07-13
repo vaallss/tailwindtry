@@ -159,7 +159,7 @@ export default function App() {
   };
 
   // Words for typing animation in hero
-  const words = ["UI/UX Designer", "Graphic Designer", "Web Developer"];
+  const words = ["UI/UX Designer", "Creative Designer", "UI/UX Developer"];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -272,12 +272,20 @@ export default function App() {
       images: [
         "/Portofolio/Cover/UIUX.png",
         "/Portofolio/UI/UX 1.png",
-        "/Portofolio/UI/UX 2.png"
+        "/Portofolio/UI/UX 2.png",
+        "/Portofolio/UI/UX 3.png",
+        "/Portofolio/UI/UX 4.png",
+        "/Portofolio/UI/UX 5.png",
+        "/Portofolio/UI/UX 6.png"
       ],
       slideDescriptions: [
         "Cover Portofolio UI/UX - Konsep solusi digital interaktif. Proyek ini merupakan hasil perancangan desain aplikasi mobile yang diikutsertakan dalam kompetisi UI/UX tingkat nasional, di mana tantangannya adalah memecahkan problem nyata pengguna sehari-hari lewat pendekatan user-centered design.",
-        "UX Research & Wireframing: Proses riset dimulai dari tahap Empathize dengan mewawancarai target pengguna untuk memetakan pain points mereka. Setelah merumuskan inti masalah, saya membuat User Persona dan Customer Journey Map. Berdasarkan temuan ini, saya merancang Low-Fidelity Wireframes di Figma untuk menyusun tata letak kasarnya terlebih dahulu, memastikan arsitektur informasi dan user flow berjalan logis sebelum masuk ke visual design.",
-        "UI Design & Interactive Prototyping: Di tahap ini, kerangka kasar wireframe dipoles menjadi visual berkelas (High-Fidelity). Saya menyusun Design System yang komprehensif mulai dari pemilihan tipografi, palet warna aksesibel, hingga komponen UI seperti button, input field, dan card agar visualnya konsisten. Terakhir, saya membuat prototype interaktif di Figma untuk keperluan Usability Testing agar fungsionalitas aplikasi bisa disimulasikan langsung oleh pengguna."
+        "UX Research & Wireframing: Proses riset dimulai dari tahap Empathize dengan mewawancarai target pengguna untuk memetakan pain points mereka. Berdasarkan temuan ini, saya merancang Low-Fidelity Wireframes di Figma untuk menyusun tata letak kasarnya terlebih dahulu, memastikan arsitektur informasi dan user flow berjalan logis sebelum masuk to visual design.",
+        "TemanCare Mobile App Design - High Fidelity UI: Halaman utama dan fitur pelacak kesehatan mental yang intuitif, dirancang dengan pendekatan user-centered untuk mempermudah akses konsultasi dan jurnal harian pengguna.",
+        "TrackHub Logistics App Design - High Fidelity UI: Tampilan dashboard dan pelacakan kurir real-time untuk aplikasi logistik, mengoptimalkan efisiensi manajemen pengiriman barang bagi pengguna personal maupun bisnis.",
+        "UMORA & SiaGas App Design: Eksplorasi antarmuka aplikasi pemesanan layanan rumah tangga (UMORA) dan aplikasi tanggap darurat bencana (SiaGas) dengan tata letak yang bersih dan navigasi cepat.",
+        "Nutrify & KreatifCloud Dashboard Design: Perancangan dashboard web untuk analisis nutrisi harian (Nutrify) dan manajemen proyek kreatif kolaboratif (KreatifCloud) dengan visualisasi data yang informatif.",
+        "Final Design Showcase: Tampilan komprehensif dari seluruh screen utama aplikasi yang menunjukkan alur perjalanan pengguna (user journey) yang mulus dari awal hingga akhir."
       ]
     },
     {
@@ -837,27 +845,37 @@ export default function App() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 fade-up">
             <p className="section-subtitle">About Me</p>
-            <h2 className="section-title gradient-text">My Dual Expertise</h2>
+            <h2 className="section-title gradient-text">My Core Expertise</h2>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-3 gap-8">
             <div className="expertise-card fade-up stagger-1">
               <div className="expertise-icon">
                 <i className="fas fa-code text-3xl"></i>
               </div>
-              <h3 className="text-2xl font-bold mb-4">Web Developer</h3>
+              <h3 className="text-2xl font-bold mb-4">Fullstack Developer</h3>
               <p className="text-gray-400 leading-relaxed">
-                Building responsive, scalable web applications with modern technologies that deliver seamless user experiences and robust functionality.
+                Building responsive, scalable web applications and high-fidelity interactive user interfaces with modern front-end technologies.
               </p>
             </div>
             
             <div className="expertise-card fade-up stagger-2">
               <div className="expertise-icon">
+                <i className="fab fa-figma text-3xl"></i>
+              </div>
+              <h3 className="text-2xl font-bold mb-4">UI/UX Designer</h3>
+              <p className="text-gray-400 leading-relaxed">
+                Designing user-centered mobile and web application layouts, wireframes, and interactive prototypes in Figma with a focus on problem-solving.
+              </p>
+            </div>
+
+            <div className="expertise-card fade-up stagger-3">
+              <div className="expertise-icon">
                 <i className="fas fa-palette text-3xl"></i>
               </div>
-              <h3 className="text-2xl font-bold mb-4">Designer</h3>
+              <h3 className="text-2xl font-bold mb-4">Creative Designer</h3>
               <p className="text-gray-400 leading-relaxed">
-                Building user-centered UI/UX designs and graphics that deliver visually appealing content that meet brand guidelines.
+                Crafting visually stunning graphic designs, media feeds, posters, merchandise, and digital art that follow professional branding guidelines.
               </p>
             </div>
           </div>
