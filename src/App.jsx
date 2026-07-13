@@ -275,6 +275,7 @@ export default function App() {
         "/Portofolio/UI/UX 2.png",
         "/Portofolio/UI/UX 3.png",
         "/Portofolio/UI/UX 4.png",
+        "/Portofolio/UI/UX 5.png",
         "/Portofolio/UI/UX 6.png"
       ],
       slideDescriptions: [
