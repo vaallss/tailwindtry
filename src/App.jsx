@@ -27,8 +27,61 @@ const smoothScrollTo = (targetPosition, duration) => {
 export default function App() {
   const [activeSection, setActiveSection] = useState('about');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeFilter, setActiveFilter] = useState('design');
+  const [activeFilter, setActiveFilter] = useState('coding');
   const [showScrollTop, setShowScrollTop] = useState(false);
+  
+  // Theme state and toggle logic
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'dark';
+  });
+
+  useEffect(() => {
+    if (theme === 'light') {
+      document.documentElement.classList.add('light');
+    } else {
+      document.documentElement.classList.remove('light');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
+
+  // Fullscreen word animation loader states
+  const [introProgress, setIntroProgress] = useState(0);
+  const [isIntroActive, setIsIntroActive] = useState(true);
+  const [isIntroExiting, setIsIntroExiting] = useState(false);
+
+  useEffect(() => {
+    if (!isIntroActive) return;
+    const interval = setInterval(() => {
+      setIntroProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            setIsIntroExiting(true);
+            setTimeout(() => {
+              setIsIntroActive(false);
+            }, 850); // slide-up transition duration
+          }, 800); // show "WELCOME" at 100% for 800ms
+          return 100;
+        }
+        return prev + 1;
+      });
+    }, 60); // ~6s total loading animation (slower transitions)
+    return () => clearInterval(interval);
+  }, [isIntroActive]);
+
+  const getIntroWord = (progress) => {
+    if (progress < 16) return "HELLO";
+    if (progress < 33) return "DESIGNING INTERFACES";
+    if (progress < 50) return "DEVELOPING EXPERIENCES";
+    if (progress < 66) return "SHAPING VISIONS";
+    if (progress < 83) return "I AM IQBAL APRIAND";
+    return "WELCOME";
+  };
+  const currentIntroWord = getIntroWord(introProgress);
   
   // Mouse position state for spotlight glow
   const [mousePos, setMousePos] = useState({ x: -1000, y: -1000 });
@@ -241,9 +294,9 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedProject]);
 
-  // Lock body scroll when modal is open
+  // Lock body scroll when modal or intro is open
   useEffect(() => {
-    if (selectedProject) {
+    if (selectedProject || isIntroActive) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -251,7 +304,7 @@ export default function App() {
     return () => {
       document.body.style.overflow = '';
     };
-  }, [selectedProject]);
+  }, [selectedProject, isIntroActive]);
 
   // Reset zoom when project or slide changes
   useEffect(() => {
@@ -267,7 +320,7 @@ export default function App() {
       category: "design",
       badge: "DESIGN",
       image: "Thumbnail/UIUXX.png",
-      description: "Perancangan UI/UX aplikasi mobile yang berfokus pada problem solving nyata, dibuat untuk kebutuhan lomba tingkat nasional dan portofolio profesional.",
+      description: "UI/UX mobile app design focusing on real-world problem solving, created for national competitions and professional portfolios.",
       link: "https://drive.google.com/file/d/19yDtoJ_cIgSxUag6gOZK14zJK1pDi9w9/view?usp=drive_link",
       images: [
         "/Portofolio/Cover/UIUX.png",
@@ -279,12 +332,12 @@ export default function App() {
         "/Portofolio/UI/UX 6.png"
       ],
       slideDescriptions: [
-        "Cover Portofolio UI/UX - Konsep solusi digital interaktif. Proyek ini merupakan hasil perancangan desain aplikasi mobile yang diikutsertakan dalam kompetisi UI/UX tingkat nasional, di mana tantangannya adalah memecahkan problem nyata pengguna sehari-hari lewat pendekatan user-centered design.",
-        "UX Research & Wireframing: Proses riset dimulai dari tahap Empathize dengan mewawancarai target pengguna untuk memetakan pain points mereka. Berdasarkan temuan ini, saya merancang Low-Fidelity Wireframes di Figma untuk menyusun tata letak kasarnya terlebih dahulu, memastikan arsitektur informasi dan user flow berjalan logis sebelum masuk ke visual design.",
-        "Thundr Grow & Figma Website: Perancangan antarmuka aplikasi akselerasi bisnis UMKM (Thundr Grow) yang mempermudah manajemen penjualan, serta desain landing page portofolio pribadi berbasis Figma yang modern dan responsif.",
-        "TernakCare & Career Platform: Eksplorasi desain UI/UX aplikasi manajemen peternakan pintar (TernakCare) untuk memudahkan pelacakan hewan ternak, dan platform pengembangan karir mahasiswa berbasis project-based learning.",
-        "BiViTas & TrackHub: Desain antarmuka aplikasi administrasi sekolah digital (BiViTas) untuk memantau data siswa secara terpadu, serta aplikasi pelacakan pengiriman logistik real-time (TrackHub) yang efisien.",
-        "Dark Theme UI Showcase: Eksplorasi desain antarmuka tema gelap (Dark Mode) untuk berbagai halaman aplikasi, mengoptimalkan kenyamanan visual pengguna saat kondisi minim cahaya."
+        "UI/UX Portfolio Cover - Interactive digital solution concept. Mobile application designs designed for national UI/UX competitions to solve everyday user problems through a user-centered design approach.",
+        "UX Research & Wireframing: The research process started with the Empathize stage by interviewing target users to map their pain points. Based on these findings, I designed Low-Fidelity Wireframes in Figma to structure the layout first, ensuring logical information architecture and user flow before visual design.",
+        "Thundr Grow & Figma Website: Interface design of an MSME business acceleration app (Thundr Grow) to simplify sales management, along with a modern, responsive personal portfolio landing page design built in Figma.",
+        "TernakCare & Career Platform: UI/UX design exploration of a smart livestock management app (TernakCare) to track farm animals, and a project-based learning career development platform for university students.",
+        "BiViTas & TrackHub: Digital school administration interface design (BiViTas) to monitor student data, and a real-time logistic delivery tracking app (TrackHub).",
+        "Dark Theme UI Showcase: Dark Mode interface design exploration for various app pages, optimizing user visual comfort in low-light environments."
       ]
     },
     {
@@ -293,7 +346,7 @@ export default function App() {
       category: "design",
       badge: "DESIGN",
       image: "Thumbnail/Feeds.png",
-      description: "Kumpulan desain konten media sosial yang estetik untuk kebutuhan promosi organisasi mahasiswa, klien freelance, dan lomba.",
+      description: "A collection of aesthetic social media content designs for student organization promotions, freelance clients, and design contests.",
       link: "https://drive.google.com/file/d/1wLVgF1hyQv6PyaUJKsO_SLVFwequcZf8/view?usp=sharing",
       images: [
         "/Portofolio/Cover/Feeds.png",
@@ -304,12 +357,12 @@ export default function App() {
         "/Portofolio/Feeds/Feeds 5.png"
       ],
       slideDescriptions: [
-        "Cover Portofolio Feeds - Kumpulan karya desain visual media sosial. Di sini saya mengelompokkan desain feed berdasarkan tujuan publikasinya, mulai dari branding organisasi kampus hingga promosi produk komersial.",
-        "Desain Feed untuk Kebutuhan Organisasi Kampus: Dibuat khusus untuk akun media sosial resmi organisasi mahasiswa. Fokus utamanya adalah penyampaian informasi kegiatan yang rapi, formal, namun tetap terlihat kekinian dan menarik minat mahasiswa lain.",
-        "Desain Feed untuk Proyek Klien (Freelance): Desain komersial untuk mempromosikan produk klien. Menggunakan pendekatan visual minimalis dan penataan layout yang menonjolkan keunggulan produk untuk meningkatkan konversi penjualan.",
-        "Desain Feed untuk Lomba & Eksplorasi Mandiri: Proyek eksperimental untuk menguji ide-ide layout baru yang lebih dinamis, tipografi yang berani (bold typography), serta kombinasi warna yang kontras untuk lomba desain grafis.",
-        "Desain Carousel Menyambung (Seamless Carousel): Teknik layout interaktif di mana gambar berlanjut tanpa putus saat digeser. Efektif banget untuk menaikkan dwell-time (waktu bertahan) pengunjung di akun Instagram.",
-        "Aesthetic Grid Template: Perancangan visual feed secara keseluruhan (puzzle/alternating layout) supaya ketika profil Instagram dikunjungi, tampilan keseluruhan feed terlihat senada, profesional, dan estetik."
+        "Feeds Portfolio Cover - A collection of social media visual designs categorized by publication purposes, ranging from campus organization branding to commercial product promotion.",
+        "Feed Design for Campus Organizations: Specifically created for official student organization accounts. Focused on delivering event information in a clean, formal, yet modern and engaging manner.",
+        "Feed Design for Client Projects (Freelance): Commercial designs to promote client products. Uses a minimalist visual approach and layouts that highlight product features to boost sales conversion.",
+        "Feed Design for Competitions & Personal Exploration: Experimental projects to test dynamic layouts, bold typography, and high-contrast color combinations for graphic design contests.",
+        "Seamless Carousel Design: Interactive layouts where images flow continuously across slides. Highly effective to increase visitor dwell-time on Instagram.",
+        "Aesthetic Grid Template: Cohesive feed planning (puzzle or alternating layout) to ensure that the profile overall aesthetic looks consistent, professional, and matching."
       ]
     },
     {
@@ -318,7 +371,7 @@ export default function App() {
       category: "design",
       badge: "DESIGN",
       image: "Thumbnail/Poster.png",
-      description: "Desain poster kreatif dengan gaya modern dan minimalis untuk keperluan kampanye sosial, acara organisasi, dan proyek lomba.",
+      description: "Creative poster designs with a modern, minimalist style for social campaigns, organizational events, and competition entries.",
       link: "https://drive.google.com/file/d/1rZGm7wWA3mtX1HZrVeFXZPH-c1SQlYQH/view?usp=drive_link",
       images: [
         "/Portofolio/Cover/Poster.png",
@@ -330,13 +383,13 @@ export default function App() {
         "/Portofolio/Poster/Poster 6.png"
       ],
       slideDescriptions: [
-        "Cover Portofolio Poster - Kumpulan karya desain poster publik dan komersial dengan berbagai tema visual.",
-        "Poster Edukasi & Kampanye Organisasi: Poster infografis untuk menyebarkan info publik atau materi kampanye sosial dari organisasi kampus. Mengedepankan tata letak yang bersih dan keterbacaan teks yang tinggi.",
-        "Poster Perlombaan / Eksplorasi Seni: Karya poster dengan visualisasi dramatis dan manipulasi foto tingkat lanjut (photo manipulation) yang dibuat khusus untuk bersaing di kompetisi desain poster nasional.",
-        "Poster Promosi Acara Klien: Dibuat untuk klien komersial yang sedang mengadakan webinar atau konser. Penekanan visual ada pada nama pembicara/bintang tamu, waktu acara, serta Call-to-Action (pembelian tiket) yang jelas.",
-        "Poster Kesadaran Sosial (Social Campaign): Desain dengan pesan mendalam menggunakan ilustrasi simbolis untuk meningkatkan kesadaran masyarakat terhadap isu-isu penting seperti lingkungan atau kesehatan mental.",
-        "Poster Eksperimental Texturing: Proyek latihan mandiri mengeksplorasi penggunaan grain textures, efek halftone, dan gaya retro modern untuk menciptakan estetika poster yang unik.",
-        "Poster Promosi Produk Komersial: Desain yang berfokus pada keindahan produk (product photography) dipadukan dengan tipografi minimalis untuk menarik perhatian calon pembeli."
+        "Poster Portfolio Cover - A collection of public and commercial poster designs with diverse visual themes.",
+        "Educational & Campaign Posters: Infographics to share public info or social campaigns for campus organizations. Prioritizes clean layouts and high text readability.",
+        "Competition & Artistic Posters: Dramatic posters utilizing advanced photo manipulation, created specifically for national poster design competitions.",
+        "Client Event Promotion Posters: Made for webinars, concerts, or events. Visual emphasis is placed on guest stars, dates, and a clear Call-to-Action.",
+        "Social Awareness Posters (Social Campaign): Designs with deep messages using symbolic illustrations to raise awareness on important issues like environment or mental health.",
+        "Experimental Texturing Posters: Personal practice projects exploring grain textures, halftone effects, and retro-modern styles for unique poster aesthetics.",
+        "Commercial Product Promotion Posters: Designs focusing on product photography paired with minimalist typography to attract buyers."
       ]
     },
     {
@@ -345,7 +398,7 @@ export default function App() {
       category: "design",
       badge: "DESIGN",
       image: "Thumbnail/printing.png",
-      description: "Desain media cetak seperti brosur, kaos promosi, dan banner panggung untuk event organisasi maupun klien bisnis.",
+      description: "Print media designs including brochures, promotional t-shirts, and stage banners for organization events and commercial clients.",
       link: "https://drive.google.com/file/d/1KkLQFGpxiSVWoWRzezyON1sifRBCVNqE/view?usp=drive_link",
       images: [
         "/Portofolio/Cover/printing.png",
@@ -354,10 +407,10 @@ export default function App() {
         "/Portofolio/Printing/Printing 3.png"
       ],
       slideDescriptions: [
-        "Cover Portofolio Printing - Kumpulan desain cetak. Proyek di kategori ini disiapkan dengan format warna CMYK dan resolusi tinggi agar hasil cetaknya tajam dan tidak pecah saat masuk ke percetakan.",
-        "Desain Brosur Lipat Tiga Organisasi: Brosur profil organisasi untuk dibagikan saat penerimaan anggota baru. Desain dibuat informatif dengan pembagian lipatan yang pas agar nyaman dibaca dan tidak membingungkan.",
-        "Desain Kaos & Merchandise Klien: Desain grafis siap sablon (vektor) untuk kaos komunitas dan merchandise promosi bisnis klien, mengutamakan estetika yang kasual agar nyaman dipakai harian.",
-        "Desain Spanduk & Banner Event: Desain baliho outdoor skala besar untuk promosi acara di jalan raya serta banner backdrop panggung event organisasi kampus."
+        "Printing Portfolio Cover - A collection of print designs. Projects in this category are prepared in high-resolution CMYK color profiles to ensure sharp print output.",
+        "Tri-fold Brochure Design: Informative organization brochure for recruitment, designed with accurate fold placement for easy reading.",
+        "T-shirt & Merchandise Design: Screenprint-ready vector designs for community shirts and client business merchandise, emphasizing casual daily wear.",
+        "Banners & Event Backdrops: Large-scale outdoor billboards and backdrops for campus event stages."
       ]
     },
     {
@@ -366,15 +419,15 @@ export default function App() {
       category: "design",
       badge: "DESIGN",
       image: "Thumbnail/Thumb.png",
-      description: "Desain thumbnail video digital yang mencolok dan beresolusi tinggi untuk meningkatkan CTR (Click-Through Rate) di YouTube.",
+      description: "High-resolution, eye-catching thumbnail designs to optimize click-through rates (CTR) on YouTube.",
       link: "https://drive.google.com/file/d/1F__Ii1wOpShC8EK5vEcfyluyxQBlVPw1/view?usp=drive_link",
       images: [
         "/Portofolio/Cover/Thumb.png",
         "/Portofolio/Thumbnail/Thumbnail.png"
       ],
       slideDescriptions: [
-        "Cover Portofolio Thumbnail - Kumpulan desain gambar pratinjau (thumbnail) untuk konten video digital.",
-        "YouTube Thumbnail (Klien & Proyek Pribadi): Didesain dengan kontras warna yang sangat tinggi, ekspresi subjek yang diperjelas, dan teks ringkas berukuran besar agar video menonjol di halaman beranda YouTube."
+        "Thumbnail Portfolio Cover - A collection of preview thumbnail designs for digital video content.",
+        "YouTube Thumbnails (Client & Personal): Designed with high contrast, clear subject expressions, and bold short texts to make the videos stand out on the YouTube feed."
       ]
     },
     {
@@ -383,7 +436,7 @@ export default function App() {
       category: "design",
       badge: "DESIGN",
       image: "Thumbnail/Product.png",
-      description: "Karya seni digital dan ilustrasi karakter unik yang dirancang khusus untuk aset digital di blockchain atau proyek klien.",
+      description: "Digital artwork and unique character designs created for blockchain digital assets or client commissions.",
       link: "https://drive.google.com/file/d/1sxauHbbrU5zB8-hqWfAyU2lsg37lwm64/view?usp=drive_link",
       images: [
         "/Portofolio/Cover/Product.png",
@@ -391,9 +444,9 @@ export default function App() {
         "/Portofolio/NFT/NFT 2.png"
       ],
       slideDescriptions: [
-        "Cover Portofolio NFT & Digital Art - Kumpulan aset seni digital berbasis vektor dan raster.",
-        "Koleksi NFT Komunitas: Desain karakter bertema fiksi ilmiah dan futuristik dengan variasi aksesoris unik untuk koleksi digital komunitas.",
-        "Digital Art Commission (Klien): Ilustrasi karakter kustom yang dipesan oleh klien untuk kebutuhan profil pribadi atau merchandise dengan lisensi komersial."
+        "NFT & Digital Art Portfolio Cover - Vector and raster-based digital art assets.",
+        "Community NFT Collection: Character designs with science fiction and futuristic themes featuring unique accessories for community collections.",
+        "Digital Art Commission: Custom character illustrations for personal profiles or commercial merchandise."
       ]
     },
     {
@@ -402,7 +455,7 @@ export default function App() {
       category: "coding",
       badge: "AI / FULLSTACK",
       image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=450&fit=crop",
-      description: "Aplikasi web full-stack pendeteksi nutrisi makanan. Sistem ini menggunakan model deep learning (CNN) untuk mendeteksi jenis makanan dari foto kamera, lalu memanfaatkan Google Gemini AI untuk memberikan rekomendasi kesehatan personal, lengkap dengan visualisasi grafik riwayat kalori pengguna.",
+      description: "Food nutrition detector web app using camera photos. Employs AI for personal health recommendations and calorie history tracking graphs.",
       link: "https://github.com/iqbalapriand",
       github: "https://github.com/iqbalapriand"
     },
@@ -412,7 +465,7 @@ export default function App() {
       category: "coding",
       badge: "BACKEND",
       image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600&h=450&fit=crop",
-      description: "RESTful API bersih dan teruji untuk manajemen buku digital. Dibuat menggunakan Node.js dengan framework Hapi, memiliki fitur validasi request yang ketat, operasi CRUD lengkap, pencarian buku berdasarkan status, serta pengujian otomatis menggunakan Postman untuk menjamin keandalan API.",
+      description: "RESTful API for book data management built with Node.js and Hapi. Features book queries and automated test suite validation.",
       link: "https://github.com/iqbalapriand/bookshelf-api",
       github: "https://github.com/iqbalapriand/bookshelf-api"
     },
@@ -422,7 +475,7 @@ export default function App() {
       category: "coding",
       badge: "FULLSTACK",
       image: "https://images.unsplash.com/photo-1557821552-17105176677c?w=600&h=450&fit=crop",
-      description: "Website e-commerce responsif dengan fitur lengkap. Menyediakan katalog produk dinamis, keranjang belanja interaktif, kalkulasi harga otomatis, serta sistem autentikasi sesi user yang aman untuk mensimulasikan alur belanja online nyata.",
+      description: "Responsive e-commerce site featuring a product catalog, interactive cart, automated price calculations, and secure user login.",
       link: "https://github.com/iqbalapriand/e-commerce",
       github: "https://github.com/iqbalapriand/e-commerce"
     },
@@ -432,7 +485,7 @@ export default function App() {
       category: "coding",
       badge: "BACKEND",
       image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=450&fit=crop",
-      description: "Backend API untuk platform rekrutmen kerja online. Dibangun menggunakan Express.js dan database relasional, menangani pendaftaran pelamar kerja, autentikasi JWT, sistem kelola lowongan oleh admin perusahaan, serta pengunggahan file CV.",
+      description: "Job board backend API built on Express.js. Manages jobseeker registrations, JWT login, job postings, and CV uploads.",
       link: "https://github.com/iqbalapriand/openjob-restful-api",
       github: "https://github.com/iqbalapriand/openjob-restful-api"
     },
@@ -442,7 +495,7 @@ export default function App() {
       category: "coding",
       badge: "CODING",
       image: "https://images.unsplash.com/photo-1517842645767-c639042777db?w=600&h=450&fit=crop",
-      description: "Aplikasi catatan digital aman berbasis web. Menggunakan React JS untuk antarmuka pengguna yang responsif, terintegrasi dengan autentikasi JSON Web Token (JWT) pada sisi client untuk memastikan catatan hanya bisa diakses oleh pemiliknya.",
+      description: "Web note-taking app utilizing React JS and JWT authentication to securely store personal text entries.",
       link: "https://github.com/iqbalapriand/notes-login-app",
       github: "https://github.com/iqbalapriand/notes-login-app"
     },
@@ -452,7 +505,7 @@ export default function App() {
       category: "coding",
       badge: "CODING",
       image: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?w=600&h=450&fit=crop",
-      description: "Sistem informasi inventory apotek berbasis web. Membantu apoteker melacak stok obat masuk dan keluar, mencatat transaksi harian, serta menghasilkan laporan penjualan bulanan secara otomatis guna meminimalkan kesalahan pencatatan manual.",
+      description: "Web-based pharmacy inventory system to track drug stock levels, daily transactions, and generate sales reports.",
       link: "https://github.com/iqbalapriand/web-apotek",
       github: "https://github.com/iqbalapriand/web-apotek"
     },
@@ -462,7 +515,7 @@ export default function App() {
       category: "coding",
       badge: "CODING",
       image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=450&fit=crop",
-      description: "Sistem IoT pengatur kecepatan kipas angin otomatis. Dibuat menggunakan mikrokontroler (C++) dan sensor suhu. Sistem akan membaca suhu ruangan secara real-time lalu otomatis mengatur kecepatan kipas lewat modul driver motor agar hemat energi.",
+      description: "IoT-based automatic smart fan built with C++ and temperature sensors. Automatically adjusts fan speed based on room temperature.",
       link: "https://github.com/iqbalapriand/smartfan-app",
       github: "https://github.com/iqbalapriand/smartfan-app"
     },
@@ -472,7 +525,7 @@ export default function App() {
       category: "coding",
       badge: "UNITY / BLENDER",
       image: "https://images.unsplash.com/photo-1551103782-8ab07afd45c1?w=600&h=450&fit=crop",
-      description: "Proyek demo game aksi 3D menggunakan Unity Engine. Seluruh aset lingkungan (environment) dan karakter dalam game dimodelkan dari nol memakai Blender, kemudian diprogram pergerakannya menggunakan bahasa C# di Unity.",
+      description: "3D action game prototype built in Unity. Character and environment assets modeled in Blender, with custom mechanics programmed in C#.",
       link: "https://github.com/iqbalapriand",
       github: "https://github.com/iqbalapriand"
     },
@@ -482,7 +535,7 @@ export default function App() {
       category: "coding",
       badge: "CODING",
       image: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=600&h=450&fit=crop",
-      description: "Game interaktif sederhana adaptasi dari permainan tradisional suwit Jawa. Dikembangkan dengan HTML5, CSS3, dan Vanilla JavaScript untuk melatih logika manipulasi DOM, lengkap dengan animasi interaktif dan sistem pencatat skor.",
+      description: "Interactive traditional Javanese finger game (suwit Jawa) using HTML, CSS, and DOM manipulation logic.",
       link: "https://github.com/iqbalapriand/suwit-jawa",
       github: "https://github.com/iqbalapriand/suwit-jawa"
     },
@@ -492,7 +545,7 @@ export default function App() {
       category: "coding",
       badge: "CODING",
       image: "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=600&h=450&fit=crop",
-      description: "Platform ujian online interaktif untuk sekolah atau komunitas. Dikembangkan menggunakan PHP native dan database MySQL, memiliki dashboard khusus admin untuk membuat bank soal, mengatur durasi kuis, serta rekapitulasi nilai otomatis.",
+      description: "Interactive web quiz app featuring an admin panel for question management, exam timers, and automatic score tallying.",
       link: "https://github.com/iqbalapriand/aplikasiquiz.io",
       github: "https://github.com/iqbalapriand/aplikasiquiz.io"
     },
@@ -502,7 +555,7 @@ export default function App() {
       category: "coding",
       badge: "REACT / JS",
       image: "https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?w=600&h=450&fit=crop",
-      description: "Kumpulan aplikasi manajemen data (CRUD) menggunakan React JS. Berfokus pada implementasi state management lokal (useState/useReducer), validasi form sisi klien, serta integrasi penyimpanan lokal (localStorage) untuk persistensi data.",
+      description: "A collection of React JS CRUD micro-applications built to practice state management and local storage data persistence.",
       link: "https://github.com/iqbalapriand",
       github: "https://github.com/iqbalapriand"
     }
@@ -619,85 +672,130 @@ export default function App() {
   });
 
   return (
-    <div className="overflow-x-hidden spotlight-container">
-      {/* Scroll to Top Button */}
-      <button 
-        id="scrollTopBtn" 
-        onClick={handleScrollToTop}
-        className={`scroll-top-btn ${showScrollTop ? 'show' : ''}`}
-      >
-        <i className="fas fa-arrow-up"></i>
-      </button>
+    <>
+      {isIntroActive && (
+        <div className={`intro-overlay ${isIntroExiting ? 'exiting' : ''}`}>
+          {/* Top branding */}
+          <div className="intro-header">
+            <span className="font-semibold tracking-widest text-[12px] opacity-60">IQBAL APRIAND J</span>
+            <span className="font-mono text-[12px] opacity-60">PORTFOLIO ©2026</span>
+          </div>
 
-      {/* Spotlight Cursor Glow */}
-      <div 
-        className={`spotlight-glow ${isSpotlightHovered ? 'spotlight-active' : ''}`} 
-        style={{ left: `${mousePos.x}px`, top: `${mousePos.y}px` }}
-      ></div>
+          {/* Main changing text */}
+          <div className="intro-body">
+            <div className="intro-glow"></div>
+            <h1 key={currentIntroWord} className="intro-word-text">
+              {currentIntroWord}
+            </h1>
+          </div>
 
-      {/* Glow Effects Background */}
-      <div className="glow-orb glow-orb-1"></div>
-      <div className="glow-orb glow-orb-2"></div>
-
-      {/* Navigation */}
-      <nav 
-        className="fixed w-full top-0 z-50 backdrop-blur-xl"
-        style={{ background: "rgba(7, 7, 8, 0.9)", borderBottom: "1px solid rgba(255, 255, 255, 0.08)" }}
-      >
-        <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-5">
-          <div className="flex justify-between items-center">
-            {/* Logo */}
-            <div className="text-2xl font-bold text-white tracking-wide">Vaalls</div>
-
-            {/* Desktop Menu */}
-            <div className="hidden md:flex space-x-12">
-              <a 
-                href="#about" 
-                onClick={(e) => handleNavLinkClick(e, '#about')}
-                className={`nav-link ${activeSection === 'about' ? 'active' : ''}`}
-              >
-                About
-              </a>
-              <a 
-                href="#experience" 
-                onClick={(e) => handleNavLinkClick(e, '#experience')}
-                className={`nav-link ${activeSection === 'experience' ? 'active' : ''}`}
-              >
-                Experience
-              </a>
-              <a 
-                href="#projects" 
-                onClick={(e) => handleNavLinkClick(e, '#projects')}
-                className={`nav-link ${activeSection === 'projects' ? 'active' : ''}`}
-              >
-                Projects
-              </a>
-              <a 
-                href="#skills" 
-                onClick={(e) => handleNavLinkClick(e, '#skills')}
-                className={`nav-link ${activeSection === 'skills' ? 'active' : ''}`}
-              >
-                Skills
-              </a>
-              <a 
-                href="#contact" 
-                onClick={(e) => handleNavLinkClick(e, '#contact')}
-                className={`nav-link ${activeSection === 'contact' ? 'active' : ''}`}
-              >
-                Contact
-              </a>
-            </div>
-
-            {/* Hamburger Button (Mobile) */}
-            <button 
-              id="menuBtn" 
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden text-white text-2xl"
-            >
-              <i className="fas fa-bars"></i>
-            </button>
+          {/* Bottom minimal footer */}
+          <div className="intro-footer flex justify-center">
+            <span className="font-mono text-xs opacity-35 tracking-widest">INITIALIZING EXPERIENCE</span>
           </div>
         </div>
+      )}
+
+      <div className={`overflow-x-hidden spotlight-container ${isIntroActive ? 'h-screen overflow-hidden' : ''}`}>
+        {/* Scroll to Top Button */}
+        <button 
+          id="scrollTopBtn" 
+          onClick={handleScrollToTop}
+          className={`scroll-top-btn ${showScrollTop ? 'show' : ''}`}
+        >
+          <i className="fas fa-arrow-up"></i>
+        </button>
+
+        {/* Spotlight Cursor Glow */}
+        <div 
+          className={`spotlight-glow ${isSpotlightHovered ? 'spotlight-active' : ''}`} 
+          style={{ left: `${mousePos.x}px`, top: `${mousePos.y}px` }}
+        ></div>
+
+        {/* Glow Effects Background */}
+        <div className="glow-orb glow-orb-1"></div>
+        <div className="glow-orb glow-orb-2"></div>
+
+        {/* Navigation */}
+        <nav 
+          className="fixed w-full top-0 z-50 backdrop-blur-xl"
+          style={{ background: "var(--nav-bg)", borderBottom: "1px solid var(--nav-border)" }}
+        >
+          <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-5">
+            <div className="flex justify-between items-center">
+              {/* Logo */}
+              <div className="text-2xl font-bold nav-logo tracking-wide">Vaalls</div>
+
+              {/* Desktop Menu */}
+              <div className="hidden md:flex items-center space-x-12">
+                <a 
+                  href="#about" 
+                  onClick={(e) => handleNavLinkClick(e, '#about')}
+                  className={`nav-link ${activeSection === 'about' ? 'active' : ''}`}
+                >
+                  About
+                </a>
+                <a 
+                  href="#experience" 
+                  onClick={(e) => handleNavLinkClick(e, '#experience')}
+                  className={`nav-link ${activeSection === 'experience' ? 'active' : ''}`}
+                >
+                  Experience
+                </a>
+                <a 
+                  href="#projects" 
+                  onClick={(e) => handleNavLinkClick(e, '#projects')}
+                  className={`nav-link ${activeSection === 'projects' ? 'active' : ''}`}
+                >
+                  Projects
+                </a>
+                <a 
+                  href="#skills" 
+                  onClick={(e) => handleNavLinkClick(e, '#skills')}
+                  className={`nav-link ${activeSection === 'skills' ? 'active' : ''}`}
+                >
+                  Skills
+                </a>
+                <a 
+                  href="#contact" 
+                  onClick={(e) => handleNavLinkClick(e, '#contact')}
+                  className={`nav-link ${activeSection === 'contact' ? 'active' : ''}`}
+                >
+                  Contact
+                </a>
+
+                {/* Theme Toggle Button */}
+                <button 
+                  onClick={toggleTheme} 
+                  className="theme-toggle-btn"
+                  aria-label="Toggle Theme"
+                >
+                  <i className={theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon'}></i>
+                </button>
+              </div>
+
+              {/* Mobile Controls */}
+              <div className="flex items-center space-x-4 md:hidden">
+                {/* Theme Toggle Button (Mobile) */}
+                <button 
+                  onClick={toggleTheme} 
+                  className="theme-toggle-btn"
+                  aria-label="Toggle Theme"
+                >
+                  <i className={theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon'}></i>
+                </button>
+
+                {/* Hamburger Button (Mobile) */}
+                <button 
+                  id="menuBtn" 
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="text-2xl nav-hamburger"
+                >
+                  <i className="fas fa-bars"></i>
+                </button>
+              </div>
+            </div>
+          </div>
 
         {/* Mobile Menu */}
         <div 
@@ -752,13 +850,13 @@ export default function App() {
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div className="fade-left">
               <p className="text-sm mb-4 accent-text">Hi, I am</p>
-              <h1 className="text-6xl font-bold mb-4" style={{ color: "#F1F5F9" }}>Iqbal Apriand Juartono</h1>
+              <h1 className="text-6xl font-bold mb-4" style={{ color: "var(--text-primary)" }}>Iqbal Apriand Juartono</h1>
               <h2 className="text-3xl font-semibold mb-6 h-[40px] flex items-center">
                 <span className="gradient-text">{currentText}</span>
-                <span className="text-white animate-pulse ml-1">|</span>
+                <span className="animate-pulse ml-1" style={{ color: "var(--text-primary)" }}>|</span>
               </h2>
               <p className="text-gray-400 leading-relaxed mb-8" style={{ fontSize: "15px", lineHeight: "1.8" }}>
-                I'm an <span className="text-white font-semibold">Informatics student</span> at <span className="text-white font-semibold">Gunadarma University</span> with hands-on experience across <span className="text-white font-semibold">UI/UX design</span>, <span className="text-white font-semibold">graphic design</span>, and <span className="text-white font-semibold">web development</span>. I enjoy working at the intersection of design and code — crafting interfaces that look great and work well, from initial wireframes in Figma through to production-ready front-end implementation.
+                I'm an <span className="highlight-text">Informatics student</span> at <span className="highlight-text">Gunadarma University</span> with hands-on experience across <span className="highlight-text">UI/UX design</span>, <span className="highlight-text">graphic design</span>, and <span className="highlight-text">web development</span>. I enjoy working at the intersection of design and code — crafting interfaces that look great and work well, from initial wireframes in Figma through to production-ready front-end implementation.
               </p>
               
               {/* Social Icons */}
@@ -892,16 +990,16 @@ export default function App() {
           {/* Filter Buttons */}
           <div className="flex justify-center gap-4 mb-12 fade-up">
             <button 
-              className={`filter-btn ${activeFilter === 'design' ? 'active' : ''}`}
-              onClick={() => setActiveFilter('design')}
-            >
-              Design
-            </button>
-            <button 
               className={`filter-btn ${activeFilter === 'coding' ? 'active' : ''}`}
               onClick={() => setActiveFilter('coding')}
             >
               Coding
+            </button>
+            <button 
+              className={`filter-btn ${activeFilter === 'design' ? 'active' : ''}`}
+              onClick={() => setActiveFilter('design')}
+            >
+              Design
             </button>
           </div>
 
@@ -913,19 +1011,37 @@ export default function App() {
                 className="project-card scale-up"
               >
                 <div 
-                  className="project-image"
-                  style={project.category === 'coding' ? { background: "linear-gradient(135deg, #FFFFFF 0%, #27272A 100%)" } : {}}
+                  className={`project-image ${project.category === 'coding' ? 'flex items-center justify-center p-4' : ''}`}
+                  style={project.category === 'coding' ? { background: "linear-gradient(135deg, var(--bg-card) 0%, var(--bg-main) 100%)" } : {}}
                 >
                   <span 
                     className={`project-badge ${project.category === 'coding' ? 'project-badge-coding' : ''}`}
                   >
                     {project.badge}
                   </span>
-                  <img 
-                    src={project.image} 
-                    alt={project.title} 
-                    className="w-full h-full object-cover opacity-80" 
-                  />
+                  {project.category === 'coding' ? (
+                    <div className="laptop-mockup-container">
+                      <div className="laptop-screen">
+                        <div className="laptop-camera"></div>
+                        <img 
+                          src={project.image} 
+                          alt={project.title} 
+                          className="laptop-screen-content" 
+                        />
+                        <div className="laptop-screen-glass"></div>
+                      </div>
+                      <div className="laptop-base">
+                        <div className="laptop-base-notch"></div>
+                      </div>
+                      <div className="laptop-shadow"></div>
+                    </div>
+                  ) : (
+                    <img 
+                      src={project.image} 
+                      alt={project.title} 
+                      className="w-full h-full object-cover opacity-80" 
+                    />
+                  )}
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-bold mb-3">{project.title}</h3>
@@ -1282,18 +1398,10 @@ export default function App() {
                 )}
               </div>
             )}
-
-            {/* Slide-specific detailed description overlay */}
-            {selectedProject.slideDescriptions?.[currentImageIndex] && !isZoomed && (
-              <div className="w-full max-w-3xl mt-4 px-6 py-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md text-center transition-all duration-300">
-                <p className="text-zinc-300 text-sm md:text-base leading-relaxed">
-                  {selectedProject.slideDescriptions[currentImageIndex]}
-                </p>
-              </div>
-            )}
           </div>
         </div>
       )}
     </div>
+  </>
   );
 }
