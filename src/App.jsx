@@ -74,11 +74,12 @@ export default function App() {
   }, [isIntroActive]);
 
   const getIntroWord = (progress) => {
-    if (progress < 16) return "HELLO";
-    if (progress < 33) return "DESIGNING INTERFACES";
-    if (progress < 50) return "DEVELOPING EXPERIENCES";
-    if (progress < 66) return "SHAPING VISIONS";
-    if (progress < 83) return "I AM IQBAL APRIAND";
+    if (progress < 14) return "HELLO";
+    if (progress < 28) return "UI/UX DESIGN";
+    if (progress < 42) return "FULLSTACK DEVELOPMENT";
+    if (progress < 56) return "QA ENGINEERING";
+    if (progress < 70) return "SOFTWARE ENGINEERING";
+    if (progress < 85) return "I AM IQBAL APRIAND JUARTONO";
     return "WELCOME";
   };
   const currentIntroWord = getIntroWord(introProgress);
@@ -212,7 +213,7 @@ export default function App() {
   };
 
   // Words for typing animation in hero
-  const words = ["UI/UX Designer", "Creative Designer", "Fullstack Developer"];
+  const words = ["Fullstack Dev", "Product Designer", "QA Engineer"];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -677,7 +678,7 @@ export default function App() {
         <div className={`intro-overlay ${isIntroExiting ? 'exiting' : ''}`}>
           {/* Top branding */}
           <div className="intro-header">
-            <span className="font-semibold tracking-widest text-[12px] opacity-60">IQBAL APRIAND J</span>
+            <span className="font-semibold tracking-widest text-[12px] opacity-60">IQBAL APRIAND JUARTONO</span>
             <span className="font-mono text-[12px] opacity-60">PORTFOLIO ©2026</span>
           </div>
 
@@ -856,7 +857,7 @@ export default function App() {
                 <span className="animate-pulse ml-1" style={{ color: "var(--text-primary)" }}>|</span>
               </h2>
               <p className="text-gray-400 leading-relaxed mb-8" style={{ fontSize: "15px", lineHeight: "1.8" }}>
-                I'm an <span className="highlight-text">Informatics student</span> at <span className="highlight-text">Gunadarma University</span> with hands-on experience across <span className="highlight-text">UI/UX design</span>, <span className="highlight-text">graphic design</span>, and <span className="highlight-text">web development</span>. I enjoy working at the intersection of design and code — crafting interfaces that look great and work well, from initial wireframes in Figma through to production-ready front-end implementation.
+                I'm an <span className="highlight-text">Informatics student</span> at <span className="highlight-text">Gunadarma University</span> with a strong background in <span className="highlight-text">Fullstack Development</span>, <span className="highlight-text">Product Design</span>, and <span className="highlight-text">QA Engineering</span>. I focus on engineering robust web applications, crafting intuitive interfaces in Figma, and ensuring high-quality software reliability from development to production.
               </p>
               
               {/* Social Icons */}
@@ -950,7 +951,7 @@ export default function App() {
               <div className="expertise-icon">
                 <i className="fas fa-code text-3xl"></i>
               </div>
-              <h3 className="text-2xl font-bold mb-4">Fullstack Developer</h3>
+              <h3 className="text-2xl font-bold mb-4">Fullstack Dev</h3>
               <p className="text-gray-400 leading-relaxed">
                 Building responsive, scalable web applications and high-fidelity interactive user interfaces with modern front-end technologies.
               </p>
@@ -960,7 +961,7 @@ export default function App() {
               <div className="expertise-icon">
                 <i className="fab fa-figma text-3xl"></i>
               </div>
-              <h3 className="text-2xl font-bold mb-4">UI/UX Designer</h3>
+              <h3 className="text-2xl font-bold mb-4">Product Designer</h3>
               <p className="text-gray-400 leading-relaxed">
                 Designing user-centered mobile and web application layouts, wireframes, and interactive prototypes in Figma with a focus on problem-solving.
               </p>
@@ -968,11 +969,11 @@ export default function App() {
 
             <div className="expertise-card fade-up stagger-3">
               <div className="expertise-icon">
-                <i className="fas fa-palette text-3xl"></i>
+                <i className="fas fa-bug text-3xl"></i>
               </div>
-              <h3 className="text-2xl font-bold mb-4">Creative Designer</h3>
+              <h3 className="text-2xl font-bold mb-4">QA Engineer</h3>
               <p className="text-gray-400 leading-relaxed">
-                Crafting visually stunning graphic designs, media feeds, posters, merchandise, and digital art that follow professional branding guidelines.
+                Ensuring software quality, writing automated test scripts, conducting manual verification, and maintaining high reliability standards.
               </p>
             </div>
           </div>
@@ -1218,7 +1219,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-400 text-sm">
-              ©2025 Iqbal Apriand. All rights reserved.<br />
+              ©2026 Iqbal Apriand Juartono. All rights reserved.<br />
               <span className="text-xs">Built with ReactJS & TailwindCSS</span>
             </p>
             <div className="flex gap-4">
