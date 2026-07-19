@@ -889,11 +889,12 @@ export default function App() {
                   Projects <i className="fas fa-arrow-right"></i>
                 </a>
                 <a 
-                  href="/resume/CV_Iqbal_Apriand_Juartono.pdf"
-                  download="CV_Iqbal_Apriand_Juartono.pdf"
+                  href="https://drive.google.com/drive/folders/1rU_Ak8fGHJS-QF4NkWFPtgOXnY59SCbo?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="btn-secondary"
                 >
-                  Resume <i className="fas fa-download"></i>
+                  Resume <i className="fas fa-external-link-alt"></i>
                 </a>
               </div>
             </div>
