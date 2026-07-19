@@ -516,16 +516,16 @@ html, body {
     box-shadow: 0 0 20px rgba(49, 168, 255, 0.45);
 }
 
-.floating-badge.badge-pr:hover {
-    border-color: #EA77FF;
-    color: #EA77FF;
-    box-shadow: 0 0 20px rgba(234, 119, 255, 0.45);
+.floating-badge.badge-js:hover {
+    border-color: #F7DF1E;
+    color: #F7DF1E;
+    box-shadow: 0 0 20px rgba(247, 223, 30, 0.45);
 }
 
-.floating-badge.badge-ai:hover {
-    border-color: #FF9A00;
-    color: #FF9A00;
-    box-shadow: 0 0 20px rgba(255, 154, 0, 0.45);
+.floating-badge.badge-github:hover {
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.45);
 }
 
 .floating-badge.badge-code:hover {
@@ -546,13 +546,13 @@ html, body {
     animation: float-badge-1 5s ease-in-out infinite;
 }
 
-.badge-pr {
+.badge-js {
     top: 15%;
     right: 8%;
     animation: float-badge-2 6s ease-in-out infinite;
 }
 
-.badge-ai {
+.badge-github {
     top: 40%;
     left: -2%;
     animation: float-badge-3 7s ease-in-out infinite;
@@ -612,7 +612,7 @@ html, body {
         height: 44px;
         border-radius: 10px;
     }
-    .badge-ai {
+    .badge-github {
         left: -6%;
     }
     .badge-code {
@@ -636,7 +636,7 @@ html, body {
     .floating-badge i {
         font-size: 13px !important;
     }
-    .badge-ai {
+    .badge-github {
         left: -4%;
         top: 38%;
     }
@@ -648,7 +648,7 @@ html, body {
         top: 5%;
         left: 6%;
     }
-    .badge-pr {
+    .badge-js {
         top: 12%;
         right: 6%;
     }

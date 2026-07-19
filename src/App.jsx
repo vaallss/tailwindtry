@@ -917,12 +917,12 @@ export default function App() {
                   <span className="font-sans font-bold text-[16px]">Ps</span>
                 </div>
                 
-                <div className="floating-badge badge-pr">
-                  <span className="font-sans font-bold text-[16px]">Pr</span>
+                <div className="floating-badge badge-js">
+                  <i className="fab fa-js text-[18px]"></i>
                 </div>
                 
-                <div className="floating-badge badge-ai">
-                  <span className="font-sans font-bold text-[16px]">Ai</span>
+                <div className="floating-badge badge-github">
+                  <i className="fab fa-github text-[18px]"></i>
                 </div>
                 
                 <div className="floating-badge badge-code">
