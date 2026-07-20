@@ -926,8 +926,8 @@ export default function App() {
                   <i className="fab fa-github text-[18px]"></i>
                 </div>
                 
-                <div className="floating-badge badge-code">
-                  <i className="fas fa-code text-[16px]"></i>
+                <div className="floating-badge badge-vscode">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code" className="w-5 h-5 object-contain" />
                 </div>
                 
                 <div className="floating-badge badge-figma">

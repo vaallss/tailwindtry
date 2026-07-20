@@ -528,10 +528,10 @@ html, body {
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.45);
 }
 
-.floating-badge.badge-code:hover {
-    border-color: #06B6D4;
-    color: #06B6D4;
-    box-shadow: 0 0 20px rgba(6, 182, 212, 0.45);
+.floating-badge.badge-vscode:hover {
+    border-color: #007ACC;
+    color: #007ACC;
+    box-shadow: 0 0 20px rgba(0, 122, 204, 0.45);
 }
 
 .floating-badge.badge-figma:hover {
@@ -558,7 +558,7 @@ html, body {
     animation: float-badge-3 7s ease-in-out infinite;
 }
 
-.badge-code {
+.badge-vscode {
     top: 50%;
     right: -2%;
     animation: float-badge-1 5.5s ease-in-out infinite;
@@ -615,7 +615,7 @@ html, body {
     .badge-github {
         left: -6%;
     }
-    .badge-code {
+    .badge-vscode {
         right: -6%;
     }
 }
@@ -640,7 +640,7 @@ html, body {
         left: -4%;
         top: 38%;
     }
-    .badge-code {
+    .badge-vscode {
         right: -4%;
         top: 48%;
     }
