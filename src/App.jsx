@@ -927,7 +927,7 @@ export default function App() {
                 </div>
                 
                 <div className="floating-badge badge-vscode">
-                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code" className="w-5 h-5 object-contain" />
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code" className="w-[18px] h-[18px] object-contain badge-icon-vscode" />
                 </div>
                 
                 <div className="floating-badge badge-figma">

@@ -528,10 +528,23 @@ html, body {
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.45);
 }
 
+.badge-icon-vscode {
+    filter: brightness(0) invert(1);
+    transition: filter 0.3s ease;
+}
+
+html.light .badge-icon-vscode {
+    filter: brightness(0);
+}
+
 .floating-badge.badge-vscode:hover {
     border-color: #007ACC;
     color: #007ACC;
     box-shadow: 0 0 20px rgba(0, 122, 204, 0.45);
+}
+
+.floating-badge.badge-vscode:hover .badge-icon-vscode {
+    filter: none;
 }
 
 .floating-badge.badge-figma:hover {
