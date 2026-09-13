@@ -75,11 +75,8 @@ export default function App() {
 
   const getIntroWord = (progress) => {
     if (progress < 14) return "HELLO";
-    if (progress < 28) return "UI/UX DESIGN";
-    if (progress < 42) return "FULLSTACK DEVELOPMENT";
-    if (progress < 56) return "QA ENGINEERING";
-    if (progress < 70) return "SOFTWARE ENGINEERING";
-    if (progress < 85) return "I AM IQBAL APRIAND JUARTONO";
+    if (progress < 28) return "I AM IQBAL APRIAND JUARTONO";
+    if (progress < 42) return "SOFTWARE ENGINEER";
     return "WELCOME";
   };
   const currentIntroWord = getIntroWord(introProgress);
@@ -857,7 +854,7 @@ export default function App() {
                 <span className="animate-pulse ml-1" style={{ color: "var(--text-primary)" }}>|</span>
               </h2>
               <p className="text-gray-400 leading-relaxed mb-8" style={{ fontSize: "15px", lineHeight: "1.8" }}>
-                I'm an <span className="highlight-text">Informatics student</span> at <span className="highlight-text">Gunadarma University</span> with a strong background in <span className="highlight-text">Fullstack Development</span>, <span className="highlight-text">Product Design</span>, and <span className="highlight-text">QA Engineering</span>. I focus on engineering robust web applications, crafting intuitive interfaces in Figma, and ensuring high-quality software reliability from development to production.
+                I'm a <span className="highlight-text">Software Engineer</span> and <span className="highlight-text">Informatics student</span> at <span className="highlight-text">Gunadarma University</span>, currently focusing on <span className="highlight-text">Quality Assurance</span> through manual testing and test automation. I focus on validating software quality, finding issues early, and building reliable testing processes from development to production.
               </p>
               
               {/* Social Icons */}
