@@ -69,14 +69,14 @@ export default function App() {
         }
         return prev + 1;
       });
-    }, 60); // ~6s total loading animation (slower transitions)
+    }, 40); // ~4s total loading animation
     return () => clearInterval(interval);
   }, [isIntroActive]);
 
   const getIntroWord = (progress) => {
-    if (progress < 14) return "HELLO";
-    if (progress < 28) return "I AM IQBAL APRIAND JUARTONO";
-    if (progress < 42) return "SOFTWARE ENGINEER";
+    if (progress < 18) return "HELLO";
+    if (progress < 55) return "I AM IQBAL APRIAND JUARTONO";
+    if (progress < 75) return "SOFTWARE ENGINEER";
     return "WELCOME";
   };
   const currentIntroWord = getIntroWord(introProgress);
